@@ -1,4 +1,4 @@
-# test_tts.py
+# test_t2s.py
 from voice.text_2_speech import tts_bytes
 
 if __name__ == "__main__":

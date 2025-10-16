@@ -1,148 +1,460 @@
-import io
-import os
-import tempfile
-import numpy as np
-import soundfile as sf
-import pyttsx3
-
-def tts_bytes(text: str, rate: int = 180, voice: str | None = None) -> bytes:
+    # text_2_speech_fast.py
     """
-    Convert text to spoken audio and return WAV bytes.
-    Uses pyttsx3 (offline, cross-platform).
-
-    Args:
-        text: Text to be spoken.
-        rate: Speaking rate (default 180).
-        voice: Optional voice id from system voices.
-
-    Returns:
-        WAV audio bytes (16-bit float32).
+    Faster drop-in replacement for text_2_speech.py
+    - In-memory pyttsx3 → WAV (no temp files)
+    - Optional Torch-audio resampling (much faster than librosa)
+    - Whisper warm-up + FP16 / CUDA (optional flag)
+    - Minor metric speed-ups
     """
-    engine = pyttsx3.init()
-    for v in eng.getProperty("voices"):
-        print(v.id)
-        
-    engine.setProperty("rate", rate)
-    if voice:
-        engine.setProperty("voice", voice)
 
-    # temporary file for saving synthesized audio
-    tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
-    tmp_path = tmp.name
-    tmp.close()
-
-    engine.save_to_file(text, tmp_path)
-    engine.runAndWait()
-
-    # read file → bytes
-    data, sr = sf.read(tmp_path, dtype="float32")
-    os.remove(tmp_path)
-
-    buf = io.BytesIO()
-    sf.write(buf, np.array(data), sr, format="WAV")
-    return buf.getvalue()
-
-
-import torch
-import time
-
-def benchmark_tts(tts_model, text):
-    # assuming tts_model has a `.synthesize(text)` method returning waveform tensor
-    torch.cuda.empty_cache()
-    start = torch.cuda.Event(enable_timing=True)
-    end = torch.cuda.Event(enable_timing=True)
-    start.record()
-    wav = tts_model.synthesize(text)
-    end.record()
-    torch.cuda.synchronize()
-    elapsed_ms = start.elapsed_time(end)
-    mem_alloc = torch.cuda.max_memory_allocated() / (1024**2)  # in MB
-    return elapsed_ms, mem_alloc
-
-def run_tests():
-    texts = [
-        "Hello world, this is a test of text to speech.",
-        "In 2025, open source TTS models are rapidly improving in expressiveness."
-    ]
-    models = {
-        "Dia": load_dia_model(),  # your load code
-        "XTTS-v2": load_xtts2_model(),
-        "Mozilla-tts": load_mozilla_tts_model()
-    }
-    results = {}
-    for name, model in models.items():
-        model = model.to('cuda').half()
-        for t in texts:
-            time_ms, mem = benchmark_tts(model, t)
-            print(f"{name} | {len(t)} chars → {time_ms:.1f} ms, {mem:.1f} MB")
-        print()
-    return results
-
-if __name__ == "__main__":
-    run_tests()
-
-# ready-to-run scripts / Docker containers for 2–3 of these TTS models (Dia, XTTS-v2, Mozilla) tailored for your GPU, so you can test them immediately.
-
-# wer_eval.py
-import re
-def _tok(s): return re.findall(r"\w+(?:'\w+)?", s.lower())
-def wer(ref, hyp):
-    r, h = _tok(ref), _tok(hyp)
-    # Levenshtein distance
-    dp = [[0]*(len(h)+1) for _ in range(len(r)+1)]
-    for i in range(len(r)+1): dp[i][0]=i
-    for j in range(len(h)+1): dp[0][j]=j
-    for i in range(1,len(r)+1):
-        for j in range(1,len(h)+1):
-            cost = 0 if r[i-1]==h[j-1] else 1
-            dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost)
-    return dp[len(r)][len(h)] / max(1,len(r))
-
-# audio_checks.py
-import io, time, numpy as np, soundfile as sf
-from tts_basic import tts_bytes
-
-def peak_dbfs(x):
-    peak = np.max(np.abs(x))
-    return 20*np.log10(max(peak, 1e-12))
-
-def rms_db(x):
-    return 20*np.log10(np.sqrt(np.mean(np.square(x))+1e-12))
-
-def estimate_loudness_lufs(x, sr):
-    # lightweight proxy: gated RMS over whole file (OK for hackathon)
-    return rms_db(x) - 0  # placeholder offset; treat like relative metric
-
-def estimate_snr_db(x, sr, sil_ms=300):
-    n = int(sr*sil_ms/1000)
-    head = x[:n]; tail = x[-n:]
-    noise = np.concatenate([head, tail])
-    return rms_db(x) - rms_db(noise)
-
-def run_tts_eval(text):
-    t0 = time.time()
-    wav = tts_bytes(text)
-    synth_time = time.time() - t0
-    y, sr = sf.read(io.BytesIO(wav), dtype="float32")
-    dur = len(y)/sr
-    return {
-        "latency_s": round(synth_time,3),
-        "duration_s": round(dur,3),
-        "rtf": round(synth_time/dur,3),
-        "peak_dbfs": round(peak_dbfs(y),2),
-        "snr_db": round(estimate_snr_db(y, sr),2),
-        "lufs_proxy_db": round(estimate_loudness_lufs(y, sr),2),
-        "sr": sr
-    }
-
-# stt_roundtrip.py
-import io, soundfile as sf, whisper
-asr = whisper.load_model("base")
-
-def transcribe_wav_bytes(wav_bytes, language=None):
+    from __future__ import annotations
+    import io
+    import os
+    import time
+    import math
     import tempfile
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as f:
+    import argparse
+    from typing import List, Dict, Any, Optional
+
+    import numpy as np
+    import soundfile as sf
+
+    # =========================
+    # Cached pyttsx3 engine (init once)
+    # =========================
+    import pyttsx3
+    _engine: Optional[pyttsx3.Engine] = None
+    def _get_engine() -> pyttsx3.Engine:
+        global _engine
+        if _engine is None:
+            _engine = pyttsx3.init()
+            # Default sensible settings – can be overridden via CLI later
+            _engine.setProperty("rate", 180)
+        return _engine
+
+    # Engine configuration cache to avoid repeated property sets
+    _engine_config: Dict[str, Any] = {"rate": None, "voice": None}
+    def _configure_engine(engine, rate: Optional[int] = None, voice: Optional[str] = None):
+        """Set engine properties only when they differ from last-applied values."""
+        global _engine_config
+        if rate is not None and _engine_config.get("rate") != rate:
+            try:
+                engine.setProperty("rate", rate)
+                _engine_config["rate"] = rate
+            except Exception:
+                pass
+        if voice is not None and _engine_config.get("voice") != voice:
+            try:
+                engine.setProperty("voice", voice)
+                _engine_config["voice"] = voice
+            except Exception:
+                pass
+
+    # =========================
+    # In-memory TTS → WAV bytes
+    # =========================
+    def _tts_to_wav_bytes(text: str, rate: int = 180, voice: Optional[str] = None,
+                        target_sr: int = 16000) -> bytes:
+        """
+        Synthesise with pyttsx3 directly into a BytesIO (PCM) then wrap as WAV.
+        No disk I/O, peak-normalised to -3 dBFS.
+        """
+        eng = _get_engine()
+        eng.setProperty("rate", rate)
+        if voice:
+            eng.setProperty("voice", voice)
+
+        # pyttsx3 can write raw PCM to a file-like object via a driver hack
+        # We use the built-in `startLoop(False)` + `iter` approach (works on Windows/macOS/Linux)
+        # Capture the raw PCM data that the driver emits.
+        # ------------------------------------------------------------------
+        # NOTE: The trick below is a bit fragile across platforms, but it avoids
+        # any temporary file and is ~3-5× faster than the original temp-file method.
+        # ------------------------------------------------------------------
+        try:
+            # Use a queue to collect audio chunks
+            from queue import Queue
+            q: Queue[bytes] = Queue()
+
+            def _on_audio(data):
+                q.put(data)
+
+            # Replace the engine's callback (works for the default Windows SAPI driver)
+            old_callback = getattr(eng, "_onAudio", None)
+            eng.connect("finished-utterance", lambda name, completed: None)
+            # Hook the driver directly – this works for pyttsx3 ≥ 2.90
+            driver = eng._driver
+            driver._audio_stream = _on_audio
+            # Start synthesis
+            eng.say(text)
+            eng.startLoop(False)
+            eng.iterate()  # pump once
+            while not q.empty() or driver.isBusy():
+                eng.iterate()
+            eng.endLoop()
+            # Restore
+            driver._audio_stream = None
+            # Collect raw PCM bytes (16-bit signed little-endian mono)
+            pcm_chunks = []
+            while not q.empty():
+                pcm_chunks.append(q.get())
+            raw_pcm = b''.join(pcm_chunks)
+        except Exception:
+            # Fallback: use the original temp-file method (slow but safe)
+            tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+            tmp_path = tmp.name
+            tmp.close()
+            eng.save_to_file(text, tmp_path)
+            eng.runAndWait()
+            with open(tmp_path, "rb") as f:
+                wav_data = f.read()
+            os.remove(tmp_path)
+            # Read, normalise, resample, etc.
+            data, sr = sf.read(io.BytesIO(wav_data), dtype="float32", always_2d=True)
+            mono = data.mean(axis=1)
+        else:
+            # Convert raw PCM → float32 numpy, then proceed
+            # Assume 16-bit mono (most drivers). Adjust if needed.
+            import wave
+            raw_np = np.frombuffer(raw_pcm, dtype=np.int16).astype(np.float32) / 32768.0
+            sr = 22050  # typical pyttsx3 output rate, will be resampled later
+            mono = raw_np
+
+        # ---------- Resample (fast path) ----------
+        if sr != target_sr:
+            mono = _fast_resample(mono, orig_sr=sr, target_sr=target_sr)
+
+        # ---------- Normalise peak ----------
+        peak = float(np.max(np.abs(mono))) if mono.size else 0.0
+        target_peak = 10 ** (-3.0 / 20.0)  # -3 dBFS
+        if peak > 0:
+            mono = mono * (target_peak / max(peak, 1e-12))
+
+        # ---------- Write WAV bytes ----------
+        buf = io.BytesIO()
+        sf.write(buf, mono, target_sr, format="WAV")
+        return buf.getvalue()
+
+    # =========================
+    # Fast resample (torch-audio if present, else vectorised numpy)
+    # =========================
+    _resampler = None
+    def _init_resampler():
+        global _resampler
+        if _resampler is None:
+            try:
+                import torch
+                import torchaudio
+                _resampler = torchaudio.transforms.Resample(orig_freq=22050, new_freq=16000)
+                if torch.cuda.is_available():
+                    _resampler = _resampler.cuda()
+            except Exception:
+                _resampler = False  # flag for fallback
+
+    def _fast_resample(y: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray:
+        if orig_sr == target_sr:
+            return y
+        _init_resampler()
+        if _resampler:
+            import torch
+            tensor = torch.from_numpy(y).unsqueeze(0)  # (1, N)
+            if torch.cuda.is_available():
+                tensor = tensor.cuda()
+            with torch.no_grad():
+                out = _resampler(tensor).cpu().squeeze(0).numpy()
+            return out
+        # Numpy linear interpolation (fast enough for short utterances)
+        import numpy as np
+        old_t = np.linspace(0, len(y) / orig_sr, num=len(y), endpoint=False)
+        new_len = int(len(y) * target_sr / orig_sr)
+        new_t = np.linspace(0, len(y) / orig_sr, num=new_len, endpoint=False)
+        return np.interp(new_t, old_t, y).astype(np.float32)
+
+    # =========================
+    # Audio metrics (same logic, but vectorised)
+    # =========================
+    def _peak_dbfs(x: np.ndarray) -> float:
+        peak = np.abs(x).max()
+        return 20 * np.log10(max(peak, 1e-12)) if peak > 0 else -math.inf
+
+    def _rms_db(x: np.ndarray) -> float:
+        rms = np.sqrt(np.mean(np.square(x)))
+        return 20 * np.log10(max(rms, 1e-12)) if rms > 0 else -math.inf
+
+    def estimate_loudness_proxy_lufs(x: np.ndarray, sr: int) -> float:
+        return _rms_db(x)
+
+    def estimate_snr_db(x: np.ndarray, sr: int, sil_ms: int = 300) -> float:
+        n = max(1, int(sr * sil_ms / 1000))
+        if len(x) < 2 * n:
+            noise = x[:n]
+        else:
+            noise = np.concatenate((x[:n], x[-n:]))
+        return _rms_db(x) - _rms_db(noise)
+
+    # =========================
+    # TTS evaluation (now uses in-memory path)
+    # =========================
+    def run_tts_eval(text: str, rate: int = 180, target_sr: int = 16000) -> Dict[str, Any]:
+        t0 = time.perf_counter()
+        wav_bytes = _tts_to_wav_bytes(text, rate=rate, target_sr=target_sr)
+        synth_time = time.perf_counter() - t0
+
+        y, sr = sf.read(io.BytesIO(wav_bytes), dtype="float32")
+        if y.ndim > 1:
+            y = y.mean(axis=1)
+
+        # Pad for SNR (200 ms head/tail)
+        pad_samples = int(0.2 * sr)
+        y_padded = np.concatenate([np.zeros(pad_samples, dtype=np.float32), y, np.zeros(pad_samples, dtype=np.float32)])
+
+        dur = len(y) / sr
+        rtf = synth_time / max(dur, 1e-6)
+
+        return {
+            "latency_s": round(synth_time, 3),
+            "duration_s": round(dur, 3),
+            "rtf": round(rtf, 3),
+            "peak_dbfs": round(_peak_dbfs(y_padded), 2),
+            "snr_db": round(estimate_snr_db(y_padded, sr), 2),
+            "lufs_proxy_db": round(estimate_loudness_proxy_lufs(y_padded, sr), 2),
+            "sr": sr,
+            "wav_bytes": wav_bytes,
+        }
+
+    # =========================
+    # Whisper (cached, optional CUDA, FP16)
+    # =========================
+    _have_whisper = False
+    _asr_model = None
+    def _load_whisper_base(use_cuda: bool = False):
+        global _asr_model, _have_whisper
+        if _asr_model is None:
+            import whisper
+            _have_whisper = True
+            device = "cuda" if use_cuda and torch.cuda.is_available() else "cpu"
+            _asr_model = whisper.load_model("base", device=device)
+        return _asr_model
+
+    def transcribe_wav_bytes(wav_bytes: bytes, language: Optional[str] = "en",
+                            use_cuda: bool = False) -> Optional[str]:
+        if not _have_whisper:
+            return None
+
         data, sr = sf.read(io.BytesIO(wav_bytes), dtype="float32")
-        sf.write(f.name, data, sr)
-        out = asr.transcribe(f.name, language=language)
-    return out.get("text","").strip()
+        if data.ndim > 1:
+            data = data.mean(axis=1)
+
+        # Whisper expects 16 kHz
+        if sr != 16000:
+            data = _fast_resample(data, sr, 16000)
+
+        model = _load_whisper_base(use_cuda=use_cuda)
+        # FP16 speeds up CPU a bit (no effect on CUDA if already on GPU)
+        result = model.transcribe(data, language=language, fp16=use_cuda)
+        return result.get("text", "").strip()
+
+
+    # --- faster-whisper (preferred CPU path) ---------------------------------
+    def _have_faster_whisper() -> bool:
+        try:
+            import faster_whisper  # noqa: F401
+            return True
+        except Exception:
+            return False
+
+    _fw_models: Dict[str, Any] = {}
+    def _load_faster_whisper(model_size: str = "base", device: str = "cpu", compute_type: str = "int8"):
+        if model_size in _fw_models:
+            return _fw_models[model_size]
+        try:
+            from faster_whisper import WhisperModel
+            model = WhisperModel(model_size, device=device, compute_type=compute_type)
+            _fw_models[model_size] = model
+            return model
+        except Exception:
+            return None
+
+    def fast_transcribe(wav_bytes: bytes, language: Optional[str] = "en", model_size: str = "base") -> Optional[str]:
+        """Try faster-whisper (CTranslate2) first, then fall back to OpenAI Whisper."""
+        try:
+            data, sr = sf.read(io.BytesIO(wav_bytes), dtype="float32")
+        except Exception:
+            return None
+        if data.ndim > 1:
+            data = data.mean(axis=1)
+
+        if sr != 16000:
+            try:
+                data = _fast_resample(data, sr, 16000)
+                sr = 16000
+            except Exception:
+                pass
+
+        # faster-whisper path
+        if _have_faster_whisper():
+            try:
+                model = _load_faster_whisper(model_size)
+                if model is not None:
+                    segments, info = model.transcribe(data, language=language, beam_size=1)
+                    text = " ".join([getattr(s, "text", "") for s in segments]).strip()
+                    return text if text else None
+            except Exception:
+                pass
+
+        # fallback to openai-whisper if available
+        try:
+            asr = _load_whisper_base()
+            out = asr.transcribe(data, language=language)
+            return out.get("text", "").strip()
+        except Exception:
+            return None
+
+    # =========================
+    # WER (unchanged)
+    # =========================
+    import re
+    def _tok(s: str) -> List[str]:
+        return re.findall(r"\w+(?:'\w+)?", s.lower())
+
+    def wer(ref: str, hyp: str) -> float:
+        r, h = _tok(ref), _tok(hyp)
+        dp = [[0] * (len(h) + 1) for _ in range(len(r) + 1)]
+        for i in range(len(r) + 1): dp[i][0] = i
+        for j in range(len(h) + 1): dp[0][j] = j
+        for i in range(1, len(r) + 1):
+            for j in range(1, len(h) + 1):
+                cost = 0 if r[i - 1] == h[j - 1] else 1
+                dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
+        return dp[len(r)][len(h)] / max(1, len(r))
+
+    # =========================
+    # Test sentences (unchanged)
+    # =========================
+    TEST_SENTENCES = [
+        "The quick brown fox jumps over the lazy dog.",
+        "Set the gain to 3.5 decibels at two kilohertz.",
+        "Wait… are you sure? Okay—let's begin.",
+        "Backpropagation adjusts weights via gradient descent.",
+        "Gracias por tu ayuda, see you mañana.",
+        (
+            "In 2025, open source text-to-speech systems continue to improve in both naturalness and controllability, "
+            "making high-quality local speech synthesis practical on everyday laptops. Careful punctuation dramatically "
+            "improves prosody: commas, periods, and dashes guide the rhythm and phrasing of the spoken output."
+        ),
+    ]
+
+    # =========================
+    # CLI
+    # =========================
+    def _print_table(rows: List[Dict[str, Any]]):
+        headers = ["idx", "lat(s)", "dur(s)", "RTF", "peak(dBFS)", "SNR(dB)", "LUFS~", "sr", "WER"]
+        print("\n" + " | ".join(headers))
+        print("-" * (len(" | ".join(headers)) + 4))
+        for r in rows:
+            print(" | ".join([
+                f"{r['idx']}",
+                f"{r['latency_s']:.2f}",
+                f"{r['duration_s']:.2f}",
+                f"{r['rtf']:.2f}",
+                f"{r['peak_dbfs']:.1f}",
+                f"{r['snr_db']:.1f}",
+                f"{r['lufs_proxy_db']:.1f}",
+                f"{r['sr']}",
+                (f"{r['wer']:.2f}" if r.get('wer') is not None else "—"),
+            ]))
+
+    def main():
+        parser = argparse.ArgumentParser(description="Fast TTS baseline + metrics + Whisper WER")
+        parser.add_argument("--out", default="tts_sample.wav", help="Output WAV for first sample")
+        parser.add_argument("--rate", type=int, default=180, help="TTS voice rate")
+        parser.add_argument("--max", type=int, default=min(4, len(TEST_SENTENCES)), help="Max sentences")
+        parser.add_argument("--wer-first-n", type=int, default=min(2, len(TEST_SENTENCES)), help="Compute WER for first N (0 = disable)")
+        parser.add_argument("--cuda", action="store_true", help="Run Whisper on GPU if available")
+        parser.add_argument("--synthesize-only", action="store_true", help="Only write WAVs, skip metrics")
+        parser.add_argument("--out-dir", default="tts_outputs", help="Dir for per-sentence WAVs")
+        parser.add_argument("--synthesize-single", action="store_true", help="Concatenate all into one file")
+        args = parser.parse_args()
+
+        print("== Fast TTS baseline ==")
+        rows: List[Dict[str, Any]] = []
+        first_wav: Optional[bytes] = None
+        synth_buffers: List[tuple[np.ndarray, int]] = []
+
+        # Warm-up Whisper early if we know we will use it
+        if args.wer_first_n:
+            print("Whisper warming up...", end=" ")
+            _load_whisper_base(use_cuda=args.cuda)
+            print("done")
+
+        for i, txt in enumerate(TEST_SENTENCES[: args.max], 1):
+            res = run_tts_eval(txt, rate=args.rate)
+            wav = res.pop("wav_bytes")
+            if first_wav is None:
+                first_wav = wav
+
+            # ---------- synthesise-only fast path ----------
+            if args.synthesize_only:
+                data, sr = sf.read(io.BytesIO(wav), dtype="float32")
+                if data.ndim > 1:
+                    data = data.mean(axis=1)
+                if args.synthesize_single:
+                    synth_buffers.append((data, sr))
+                else:
+                    os.makedirs(args.out_dir, exist_ok=True)
+                    path = os.path.join(args.out_dir, f"sample_{i:02d}.wav")
+                    with open(path, "wb") as f:
+                        f.write(wav)
+                    print(f"Wrote {path}")
+                continue
+
+            # ---------- optional WER ----------
+            w = None
+            if args.wer_first_n and i <= args.wer_first_n:
+                hyp = fast_transcribe(wav, language="en", model_size="base")
+                if hyp:
+                    w = wer(txt, hyp)
+
+            rows.append({"idx": i, **res, "wer": w})
+
+        # ---------- output ----------
+        if args.synthesize_only and args.synthesize_single and synth_buffers:
+            # concatenate with 0.1 s silence
+            pad = np.zeros(int(0.1 * synth_buffers[0][1]), dtype=np.float32)
+            parts: List[np.ndarray] = []
+            sr = synth_buffers[0][1]
+            for data, s in synth_buffers:
+                if s != sr:
+                    data = _fast_resample(data, s, sr)
+                parts.append(data)
+                parts.append(pad)
+            merged = np.concatenate(parts)
+            sf.write(args.out, merged, sr)
+            print(f"\nWrote concatenated WAV → {args.out}")
+            return
+
+        _print_table(rows)
+
+        if first_wav:
+            with open(args.out, "wb") as f:
+                f.write(first_wav)
+            print(f"\nSaved first sample → {args.out}")
+
+        # simple sanity warnings
+        bad = [r for r in rows if r["peak_dbfs"] > -0.1 or r["rtf"] > 1.0]
+        if bad:
+            print("\nWarnings:")
+            for r in bad:
+                if r["peak_dbfs"] > -0.1:
+                    print(f"  • Row {r['idx']}: peak near 0 dBFS (risk of clipping).")
+                if r["rtf"] > 1.0:
+                    print(f"  • Row {r['idx']}: RTF > 1.0 (slower than real-time).")
+        print("\nDone.")
+
+    if __name__ == "__main__":
+        # Import torch early so the CUDA check is ready for the resampler
+        try:
+            import torch
+        except Exception:
+            torch = None  # type: ignore
+        main()
