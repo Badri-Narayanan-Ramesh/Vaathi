@@ -1,0 +1,12 @@
+[
+  {
+    "q": "1. According to the context provided, what is observed about the electronic music's genre-specific style when transferring styles?",
+    "options": [
+      "A) The style completely changes and losries lose their original feel.",
+      "B) The model maintains genre-specific style consistency while preserving rhythmic content. \u2705 (correct answer: B)",
+      "C) All genres blend into a uniform, non-distinctive sound.",
+      "D) Only classical music retains its distinct characteristics after the transfer process."
+    ],
+    "answers": "Answers: A)-1 C)-2 D)-3"
+  }
+]

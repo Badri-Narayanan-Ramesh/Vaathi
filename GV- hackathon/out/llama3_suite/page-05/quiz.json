@@ -1,0 +1,29 @@
+[
+  {
+    "q": "1. What is notable about the generated jazz patterns in Figure 3?",
+    "options": [
+      "A) Lack of syncopation",
+      "B) Realistic timing and structure",
+      "C) Too complex",
+      "D) No variation"
+    ]
+  },
+  {
+    "q": "2. What type of annealing strategy does Figure 4 compare to cyclical strategies?",
+    "options": [
+      "A) Linear",
+      "B) Non-linear",
+      "C) Randomized",
+      "D) Incremental"
+    ]
+  },
+  {
+    "q": "3. What is the main purpose of comparing different annealing strategies in Figure 4?",
+    "options": [
+      "A) To improve drum pattern quality",
+      "B) To enhance musicality",
+      "C) To evaluate strategy effectiveness",
+      "D) To reduce noise"
+    ]
+  }
+]

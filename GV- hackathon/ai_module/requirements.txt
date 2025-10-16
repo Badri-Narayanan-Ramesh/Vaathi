@@ -1,0 +1,14 @@
+pymupdf
+pdf2image
+pillow
+easyocr
+torch
+transformers
+sentence-transformers
+chromadb
+langchain
+pyttsx3
+openai
+requests
+pytest
+google-generativeai

@@ -1,0 +1,9 @@
+Bullets:
+- Training stability benefits from reduced oscillation in loss curves.
+- Mode collapse begins between epochs 20-30, indicated by sharp decline in coverage (Figure 3).
+- High apparent coverage observed early on due to diversity of random initialization.
+- Critical period for mode collapse is mid-training, with the generator converging to limited modes around epochs 20-50.
+- Late training reveals stabilization at lower coverage levels despite persistent mode limitations.
+
+Summary:
+The study highlights key periods in neural network training where stability and diversity are most affected, pinpointing early stages of high apparent coverage due to initialization variance, a critical mid-training collapse period leading to limited modes generation by the generator around epochs 2tyes, followed by late stabilization at reduced coverage despite limitations.

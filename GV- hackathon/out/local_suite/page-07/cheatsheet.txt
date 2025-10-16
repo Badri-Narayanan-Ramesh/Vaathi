@@ -1,0 +1,31 @@
+# Cheatsheet for Style Transfer Success with Rhythm Preservation
+
+## Definitions:
+- **Style Transfer**: Applying the style of one image to the content of another while preserving its inherent structure.
+- **Rhythmic Structure in Music and Audio Samples**: The pattern or flow of sounds that create a beat, commonly found across various music genres like hip hop, electronic dance music (EDM), jazz, etc.
+
+## Formulas & Key Steps:
+1. Model Selection for Genre-Specific Style Consistency:  
+    _Formula_: Select an appropriate neural style transfer model that has been fine-thoroughly trained on genre-specific styles to ensure consistency (e.g., Gatys et al.'s "Neural Algorithm of Artistic Style" for image, or similar principles adapted for audio).  
+    _Key Steps_: 
+        - Choose a model pretrained with genres in mind; e.g., EDM models trained on electronic dance music samples.
+
+2. Preservation Mechanism Formulation (Style-Content Balance):
+    No specific formula, but the balance can be quantified by comparing content and style loss functions output during transfer process to maintain high success rate without rhythm distortion.  
+    
+3. Measuring Success Rate: 
+    _Formula_ not required for understanding purpose; however, defining it as a binary classification where successful transfers meet the >80% threshold can be helpful.  
+    _Key Steps_: 
+        - Define and implement success rate measurement post-transfer (e.g., compare original content with output). If rhythmic integrity is maintained above an empirically set percentage, consider it a successful transfer.
+
+4. Evaluation of Rhythm Preservation Across Genres (Ensuring Consistency): 
+    _Formula_: Use audio feature extraction tools like MFCCs to extract temporal patterns and compare them pre-and post style application via peak frequency alignment methods or similar rhythmic analysis techniques.  
+    _Key Steps_: 
+        - Extract the core rhythmic elements (beats, tempo) from both original and transferred samples using spectral analysis tools like Fourier transforms to ensure consistency in output beats per minute (BPM).
+      
+5. Maintaining Core Rhythm during Transfer across Diverse Genres:  
+    _Key Steps_: 
+        - Test the model on a diverse set of genres, ensuring that core rhythmic elements are preserved post-transfer by comparing original and generated audio via spectral similarity metrics like Mel Frequency Cepstral Coefficients (MFCC). Look for consistent genre fidelity in output samples.
+  
+## Observations: 
+Based on Figure 5, the model demonstrates high success rate across different genres with style applied while maintaining rhythmic integrity as a core feature of each original piece without introducing any noticeable distortion or alteration to beat patterns and BPMs.

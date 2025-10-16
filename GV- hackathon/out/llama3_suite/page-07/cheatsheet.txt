@@ -1,0 +1,32 @@
+Here's a concise cheatsheet on RAW and OCR with tight bullets:
+
+**RAW (Style Transfer)**
+
+• **Definition:** Style transfer technique that preserves rhythm and genre-specific style.
+• **Key Formulas:**
++ Image synthesis using VGG16 or ResNet50 features
++ Attention mechanisms for style adaptation
+• **Rules of Thumb:**
++ High-quality input data with consistent rhythm
++ Large-scale training datasets for better performance
+• **Steps:**
+1. Data collection: Gather diverse electronic samples.
+2. Model training: Train on dataset using VGG16/ResNet50 features.
+3. Style transfer: Apply attention mechanisms to adapt style.
+
+**OCR (Optical Character Recognition)**
+
+• **Definition:** Technique to recognize text within images or videos.
+• **Key Formulas: None**
+• **Rules of Thumb:**
++ High-resolution input data
++ Pre-processing techniques for noise reduction
+• **Steps:**
+1. Data preprocessing: Clean and normalize input data.
+2. Model training: Train on dataset using convolutional neural networks (CNNs).
+3. Inference: Use trained model to recognize text within images or videos.
+
+**Additional Tips**
+
+• Monitor evaluation metrics (e.g., accuracy, precision) for style transfer models.
+• Regularly update training datasets for OCR models to maintain high performance.

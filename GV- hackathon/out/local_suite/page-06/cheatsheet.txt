@@ -1,0 +1,21 @@
+# Cheatsheet on Annealing Techniques in Generative Music Processing
+
+## Definitions
+- **Annealing**: A technique used to escape local minima by temporarily allowing worse states.
+- **Cyclical Annealing (CA)**: Alternates between constraining and freezing, promoting diversity while avoiding collapse.
+    - Periodically breaks KL constraint for freshness in patterns.
+- **Linear Annealing (LA)**: Gradually tightens constraints from 0 to self-referential repetition without escaping local minima effectively.
+
+## Formulas and Key Steps
+- For any annealing technique, the temperature `T` generally follows a schedule that decreases over time or iterations according to its type (linearly or cyclically).
+    - CA: T oscillates between 0 and 1 with periodic breaks in KL constraint.
+    - LA: T monotonically increases from 0 towards an upper limit, often leading to repetition without escaping local minima effectively.
+- Pattern Diversity Score (PDS) measures the variety of patterns produced using different temperatures or schedules; a higher PDS indicates greater diversity and coherence in music output with CA typically outperforming LA regarding this metric by 2–3 times as per research findings mentioned above.
+    - PDS = Number_of Unique Patterns / Total_Number_of_Generated_Patterns at each iteration step or over the entire process.
+- Key Steps:
+    1. Initialize music generation parameters and temperature schedule (CA/LA).
+    2. Generate a pattern using current `T` value, respecting constraints if any apply.
+    3. Adjust `T`: 
+        - In CA: T alternates between increasing to decrease the effect of KL constraint or resetting for freshness during periodic breaks (diversity-promoting phase).
+        - In LA: Slowly increase/decrease T, tightening constraints leading towards a self-referential state without promoting diversity. 
+    4. Apply music generation rules and any additional post-processing to ensure musical coherence while monitoring PDS as an indicator of successful pattern variation maintenance with CA over LA techniques.

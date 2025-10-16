@@ -1,0 +1,65 @@
+[
+  {
+    "page_id": 1,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 2,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 3,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 4,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 5,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 6,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  },
+  {
+    "page_id": 7,
+    "explain_nonempty": true,
+    "answer_nonempty": true,
+    "flashcards_nonempty": true,
+    "quiz_nonempty": true,
+    "cheatsheet_nonempty": true,
+    "retrieval_count": 3
+  }
+]

@@ -1,0 +1,39 @@
+Here is a concise cheatsheet for RAW and OCR:
+
+**RAW**
+
+* **Definitions:**
+ + Mode collapse: when the generator converges to limited modes.
+ + Training stability: when loss curves and coverage metrics show minimal oscillation.
+
+* **Key Formulas:**
+ None
+
+* **Rules of Thumb:**
+ - Epoch 20-30: mode collapse begins, sharp decline in coverage.
+ - Epoch 0-10: high apparent coverage due to random initialization diversity.
+ - Epoch 50+: stabilization with reduced coverage levels and persistent mode limitations.
+
+* **Steps:**
+
+1. Monitor training dynamics from epoch 0-10.
+2. Track mode collapse from epoch 20-30.
+3. Evaluate training stability from epoch 50+.
+
+**OCR**
+
+* **Definitions:**
+ None
+
+* **Key Formulas:**
+ None
+
+* **Rules of Thumb:**
+ None
+
+* **Steps:**
+
+1. Analyze the graph with a line graph and a bar graph for patterns or trends.
+2. Identify key features, such as mode collapse or training stability.
+
+Note: Since OCR is not well-defined in the context provided, I couldn't include specific rules of thumb or steps. If you provide more information about OCR, I can help create a more detailed cheatsheet.

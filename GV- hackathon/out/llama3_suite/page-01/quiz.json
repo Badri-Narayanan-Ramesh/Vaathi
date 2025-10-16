@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. What is a characteristic that makes letters like A, C, and G easier to learn?",
+    "options": [
+      "A) Their smoother shapes",
+      "B) Their sharper edges",
+      "C) Their similar sounds",
+      "D) Their position in the alphabet"
+    ]
+  },
+  {
+    "q": "2. Which model shows improved letter diversity compared to the vanilla GAN baseline?",
+    "options": [
+      "A) Vanilla GAN",
+      "B) Feature-matching GAN",
+      "C) Deep learning model",
+      "D) Traditional handwriting model"
+    ]
+  },
+  {
+    "q": "3. What is the result of using a feature-matching GAN compared to a vanilla GAN in terms of OCR coverage?",
+    "options": [
+      "A) Coverage drops to 0.4-0.5",
+      "B) Coverage stays the same",
+      "C) Coverage improves to ~0.7-0.8",
+      "D) Coverage increases to 1.0"
+    ],
+    "answers": "Answers: 1) B, 2) B, 3) C"
+  }
+]

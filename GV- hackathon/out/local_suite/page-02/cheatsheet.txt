@@ -1,0 +1,21 @@
+# Deep Learning Training Dynamics Cheatsheet
+
+## Stability & Oscillation in Loss Curves
+- **Improved stability** means less fluctuation or oscillation observed during training. This is evidenced by smoother loss curves and more consistent coverage metrics (see Figure 2).
+
+## Epoch Milest end Periods: Key Dynamics & Modes Collapse Trends
+- **Early epochs (0-10)**: Diverse initialization results in high apparent training stability with a mix of modes, which can be misleading. The coverage metric is not indicative due to randomness but typically appears initially higher as the model explores different areas of the data distribution.
+  - Note: Coverage should never solely determine stopping criteria for early epochs.
+- **Mid-training (20-50)**, known as the critical collapse period, is where notable changes occur in training dynamics and stability markers are observed through loss curves and coverage metrics that begin to decline sharply after about 20 epochs (see Figure 3). This signifies mode convergence.
+   - *Key Steps*: Recognize when generator converges; monitor the decrease in diversity of generated samples as it begins producing limited modes or features. Apply techniques like Mode-Swapping, Unrolled GANs to mitigate collapse (if necessary) and maintain stability for better results at this stage.
+   - *Formula*: Not applicable here but monitoring loss/coverage ratio can guide intervention timing if decay is excessive early on.
+- **Late training (50+)** exhibits stabilization where the coverage levels are consistently reduced, indicating that most modes have been exhausted and generator convergence to a set of dominant features or patterns occurs with less diversity in outputs—a persistent limitation often remains as well (see Figure 2). This is when finalizing model parameters.
+   - *Key Steps*: Fine-tune remaining epochs by focusing on stabilization; consider introducing regularizations if overfitting signs appear, and reassess whether the coverage metric still serves its purpose or bears little impact as training progresses (see Figure 2). Deciding when to stop should also take into account other factors like validation loss.
+   - *Formula*: While no direct formula is mentioned for late-stage interventions, regularization techniques and early stopping criteria based on a composite of various metrics could be employed here in addition to the stabilizing trend observed (see Figure 2).
+
+## General Training Guidelines & Practices
+- Continually assess loss curves and coverage metric throughout all training phases. Early indicators can signal potential issues or successes that may inform subsequent adjustments, like learning rate changes or batch size modifications for enhanced diversity in early epochs (see Figure 2).
+   - *Key Steps*: Regularly evaluate model performance; adapt hyperparameters as needed based on observed training dynamics to maintain the balance between exploration and exploitation throughout all stages. Employ techniques like mini-batch discrimination if necessary for diversity enhancement or prevention of mode collapse (see Figure 2).
+    - *Formula*: While specific formulas aren't directly cited, general hyperparameter adjustment strategies can include using learning rate schedules and adapting batch sizes based on observed loss trends to optimize training dynamics across epochs.
+
+(Note that no explicit equations are provided in the original text; this cheatsheet relies heavily on interpretative guidance drawn from descriptive elements within it.)

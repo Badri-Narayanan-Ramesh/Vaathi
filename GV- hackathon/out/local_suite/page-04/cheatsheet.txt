@@ -1,0 +1,24 @@
+### Cheatsheet for Problem 2 Analysis of Text-todependent Music Generation using GANs (Variational Autoencoders): Avoidance & Interpretation of Latent Dimensions Collapse ###:
+
+#### Evidence and Prevention ####
+- **Evidence**: Nonzero KL divergence, diverse outputs from free bits. 
+    - `KL Annealing`: Introduced to regularize the model by gradually increasing temperature in latent space. Helps maintain diversity (referenced as Figure 1).
+    - `Free Bits` : Ensures variation even when KL annealing is not used, preventing uniform outputs from collapse of posterior distribution during training phases without overfitting to one particular pattern or instrument.
+  
+- **Prevention**: Annealing process and latent space exploration with free bits help in avoiding the model's 'collapse'. The lack thereof would result in homogenized patterns, despite varied input (as shown by identical output when a single dimension is swept). 
+    - `Experiment Conclusion`: Latent variation experiments show clear and diverse changes induced from control of complexity through latent space. These can be visually compared across outputs based on individual variations for density or instrument usage alteration due to one-dimensional manipulation (referenced as Figure 2 & experiment details).
+
+#### Interpretation of Each Latent Dimension ####: Control Over Musical Properties
+1. **Complexity control**: Sweeping a single latent dimension alters the pattern's density and how often instruments are activated within that piece, affecting both structural elements like bar count or note duration (referenced as Figure 2).
+   - Formula/Steps for Complexity Control manipulation could be represented by `LatentDimension_i = Parameter * Input + Noise`. Adjust 'Parameter' to vary pattern complexity.
+   
+2. **Humanization**: Manipulating the latent space introduces subtle changes in timing and instrument usage, emulating human-like imperfections or expressiveness (referenced as Humanization experiment). This can be done by adding controlled noise within specific dimensions that influence these properties without losing overall coherency of generated music.
+   - `Humanization Formula/Steps`: Adjusting latent vectors to incorporate timing and instrumentation varians with minimal impact on main musical structure; could use a targeted approach such as `LatentDimension_humanization = Base + ControlledNoise(tempo, timbre)`.
+   
+3. **Instrument Usage**: Different dimensions control variations in instruments or sounds that can be used to represent different textures and emotions within the piece (not explicitly detailed but inferred from humanized results). 
+   - `Dimension Instruments Control`: Alter latent space for each instrument representation; this might involve special handling of certain frequencies representing specific timbres. Formula/Steps: Adjust a dedicated dimension with formula e.g., `LatentInstrument_dim = Parameter * Input + Noise`.
+   
+4. **Density and Timing** (inferred from complexity control & humanization): Manipulate dimensions to create variations in how notes are grouped into bars or phrases, affecting the perceived 'busyness' of a section versus its rhythmical flow and pacing throughout the composition.
+   - `Density/Timing Formula`: Adjusted latent vectors directly control note density; e.g., `LatentDimension_density = Parameter * Input + Noise` to modify bar count or beat subdivisions in response to input text's length and complexity, ensdonable for creating varied rhythmic structures aligning with the generated music’s mood/intensity as prompted by given context.
+
+Note: Exact formulas are highly dependent on specific model architecture (e.g., VAE or GAN), latent space dimensionality, and desired control granularities over musical properties; these cheatsheet pointers provide a broad framework for interpretation rather than direct mathematical expressions applicable across all models without alteration.

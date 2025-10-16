@@ -1,0 +1,13 @@
+Let's break down this page together.
+
+So, we're talking about how to train a machine learning model called a generator. It's like a super powerful tool that creates new things based on what it's learned from existing data.
+
+Here are the main points:
+
+• **Training stability**: When we train our generator, we want it to be stable and not wobble around (called oscillation) too much. This is important because it helps us get better results.
+• **Mode collapse**: Imagine you're trying to create a lot of different types of art, but after a while, the generator starts creating almost the same type of art over and over again. That's what we call mode collapse.
+• **When does it happen?**: Mode collapse usually starts happening around epoch 20-30, which means that's when we start to see a sharp decline in coverage (how well the model is doing its job).
+• **What happens early on?**: When we first start training, the generator makes a lot of mistakes because it doesn't know what it's doing yet. But after a few epochs, it starts to get better and better.
+• **What about later on?**: Eventually, the generator will stop improving as much because it has already learned everything it can from the data.
+
+Summary: Training stability is crucial for getting good results with our generator model. We need to be aware of mode collapse, which happens when the generator starts creating similar art over and over again. By understanding how training works, we can improve our models and get better results!

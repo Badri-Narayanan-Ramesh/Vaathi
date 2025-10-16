@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What factors contribute to certain letters surviving mode collapse during handwritten character recognition?",
+    "a": "Letters with sharper edges (e.g., A, C, G) appear more often due to their ease of learning."
+  },
+  {
+    "q": "How does the feature-matching model compare to the vanilla GAN baseline in terms of letter diversity?",
+    "a": "The feature-matching GAN shows improved letter diversity compared to the vanilla GAN baseline."
+  },
+  {
+    "q": "What is the approximate coverage rate of the vanilla GAN when trained without the chosen fix?",
+    "a": "~0.6-0.7"
+  },
+  {
+    "q": "How does visual quality assessment compare the performance of the feature-matching model versus the vanilla GAN?",
+    "a": "The feature-matching model produces more recognizable letter shapes."
+  },
+  {
+    "q": "What is the outcome of the feature-matching model's coverage rate when compared to the vanilla GAN baseline?",
+    "a": "~0.7-0.8"
+  }
+]

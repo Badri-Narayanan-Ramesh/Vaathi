@@ -1,0 +1,30 @@
+Here is a concise cheatsheet for OCR using Cyclical Annealing:
+
+**Definitions:**
+
+• **Cyclical Annealing**: Alternates between 0 and 1 to maintain pattern diversity and avoid premature collapse.
+• **Linear Annealing**: Increases monotonically from 0 to 1, leading to repetitive patterns.
+
+**Key Formulas:**
+
+• **KL Divergence**: Measures the difference between two probability distributions. (Not directly used in OCR)
+• **Mutual Information**: Measures the dependence between two random variables. Used for OCR feature extraction.
+
+**Rules of Thumb:**
+
+• **Cyclical Annealing**: Increase α (temperature) every 10-20 iterations, with α = 1 at maximum.
+• **Linear Annealing**: Decrease α (temperature) linearly from 1 to 0 over the entire process.
+• **Early Stopping**: Monitor model performance on a validation set and stop training when performance plateaus.
+
+**Steps:**
+
+1. **Preprocessing**: Resize input images, normalize pixel values.
+2. **Feature Extraction**: Use mutual information or other feature extraction techniques.
+3. **Training**: Train the OCR model using cyclical annealing (α = 0.5 at initialization).
+4. **Validation**: Monitor performance on a validation set during training.
+5. **Inference**: Apply trained model to new, unseen input images.
+
+**Additional Tips:**
+
+• Use a larger model or more features for better performance but increased risk of overfitting.
+• Regularly monitor and adjust hyperparameters (e.g., learning rate, batch size) for optimal results.

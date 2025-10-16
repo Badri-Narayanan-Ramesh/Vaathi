@@ -1,0 +1,9 @@
+- Feature-matching stabilization improves visual quality.
+
+- It reduces discriminator overpowering by matching feature distributions.
+
+- Better letter recognition in generated samples; fewer artifacts than baseline.
+
+- More stable convergence with reduced oscillations during training (see Figure 4).
+
+Summary: Feature-matching stabilization enhances OCR visual quality, increases sample accuracy, and achносит more stable model convergence compared to the vanilla approach.

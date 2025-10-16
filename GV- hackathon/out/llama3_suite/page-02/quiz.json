@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. When does mode collapse become evident in GAN training?",
+    "options": [
+      "A) Early epochs (0-10)",
+      "B) Mid-training (20-50)",
+      "C) Late training (50+)",
+      "D) After training is complete"
+    ]
+  },
+  {
+    "q": "2. What happens to coverage levels during late training?",
+    "options": [
+      "A) They increase",
+      "B) They decrease slowly",
+      "C) They stabilize at reduced levels",
+      "D) They remain the same"
+    ]
+  },
+  {
+    "q": "3. At which stage of training does the generator converge to limited modes?",
+    "options": [
+      "A) Early epochs (0-10)",
+      "B) Mid-training (20-50)",
+      "C) Critical collapse period",
+      "D) Late training (50+)"
+    ],
+    "answers": "Answers: 1) C, 2) C, 3) C"
+  }
+]

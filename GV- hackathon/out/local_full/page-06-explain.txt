@@ -1,0 +1,8 @@
+- Cyclical annealing alternates between states, giving periodic breaks from the KL constraint.
+
+- Linear annealing increases continuously but often leads to premature collapse and repetitive patterns.
+
+- Compared with cyclical methods, linear ones maintain significantly lower pattern diversity and less coherence in outputs.
+
+Summary: 
+Cyclical annealing enhances output variety while preventing the decline associated with continuous improvement techniques like linear annealing.

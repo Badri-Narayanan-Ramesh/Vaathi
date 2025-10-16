@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. What type of annealing process is described as giving periodic breaks from the KL constraint?",
+    "options": [
+      "A) Linear annealing",
+      "B) Cyclical annealing",
+      "C) Thermal annealing",
+      "D) Kinetic annealing"
+    ]
+  },
+  {
+    "q": "2. Which type of annealing process often causes premature collapse and repetitive patterns?",
+    "options": [
+      "A) Cyclical annealing",
+      "B) Linear annealing",
+      "C) High-temperature annealing",
+      "D) Low-temperature annealing"
+    ]
+  },
+  {
+    "q": "3. What is a result of using cyclical annealing compared to linear annealing in terms of pattern diversity?",
+    "options": [
+      "A) Cyclical annealing has lower pattern diversity",
+      "B) Cyclical annealing has similar pattern diversity",
+      "C) Cyclical annealing maintains 2\u20133\u00d7 higher pattern diversity",
+      "D) Linear annealing has slightly higher pattern diversity"
+    ],
+    "answers": "Answers: 1) B, 2) B, 3) C"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "q": "1. What is the main difference between cyclical and linear annealing in terms of pattern diversity?",
+    "options": [
+      "A) Cyclical annealing maintains higher pattern diversity than linear annealing does. [Ans: A]",
+      "B) Linear annealing maintains higher pattern diversity due to its monotonic increase. [C]",
+      "C) Both cyclical and linear annealing provide equal levels of pattern diversity. [D]"
+    ]
+  },
+  {
+    "q": "2. Which aspect is often a downside of using linear annealing?",
+    "options": [
+      "A) It leads to premature collapse, causing repetitive patterns in the output. [Ans: A]",
+      "B) Cyclical annealing takes too long for practical use due to its non-monotonic nature. [C]",
+      "C) Linear annealing maintains a consistent pattern without any diversity throughout. [D]"
+    ]
+  },
+  {
+    "q": "3. How does cyclical annealing differ from linear annealing in terms of the KL constraint?",
+    "options": [
+      "A) Cyclical annealing gives periodic breaks, sustaining both musically coherent outputs and diversity. [Ans: A]",
+      "B) Linear annealing has no impact on pattern repetition or breaking constraints with time progression. [C]",
+      "C) Both cyclical and linear methods of annealing completely remove the KL constraint during processing. [D]"
+    ]
+  }
+]

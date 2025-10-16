@@ -1,0 +1,18 @@
+## Jazz Pattern Generation Cheatsheet: Quality Assessment and Annealing Strategies
+
+---
+
+**Quality Assessment Criteria for Generated Jazz Patterns**
+- Do generated patterns sound musical? [Yes, as evidenced by realistic timing and structure]
+- Show jazz traits like syncopation and complexity.
+- Rhythms must be coherent with variation noticeable in each sample (see Fig 3 samples).
+
+---
+
+**Annealing Strategies Comparison for Jazz Pattern Generation: Key Points & Metrics**
+1. Define the pattern generation objective, ensuring it aligns with jazz music characteristics.
+2. Implement cyclical annealing strategy - typically oscillates between exploration and exploitation phases to maintain a balance of creativity within constraints (referenced in Fig 4). Benefits: richness in improvisational elements; Risks: potential loss of coherence or complexity if not monitored.
+3. Implement linear annealing strategy - gradual reduction from high-energy states towards stable jazz patterns to maintain a balance between innovation and tradition (also referenced in Fig 4). Benefits: steadiness over time; Risks: may become too predictable without sufficient variation introduced during generation phases.
+4. Evaluate the rhythmic coherence across samples, considering syncopation levels as per jazz standards. Ensure there'thenoticeablevariations in each sample for diversity and engagement (observed in Fig 3).
+5. Compare generated patterns using a consistent metric to ensure objective quality assessment; may include listener surveys or expert reviews focusing on the 'musical feel'.
+6. Adapt strategies based on feedback, aiming at optimal balance between randomness and structure (Figure 5) for continuous improvement in jazz pattern generation.
