@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.1-flat",
+  "guidelines": {
+    "primary_metric": "WER<=wer_max",
+    "secondary_checks": "wpm within bounds; snr>=snr_min; pauses within ranges; normalization matches any allowed; pitch_stdev>=pitch_stdev_min if present",
+    "failure_modes": "number/unit errors; acronym mishandling; missing/exaggerated pauses; flat prosody on long passages; ASR swaps on non-English"
+  },
+  "items": [
+    {
+      "id": "A1",
+      "cat": "pangram",
+      "text": "The quick brown fox jumps over the lazy dog.",
+      "ref": "The quick brown fox jumps over the lazy dog.",
+      "wer_max": 0.05,
+      "wpm": "150-190",
+      "snr_min": 20,
+      "pauses": "after=.;min=200;max=600",
+      "notes": "Balanced consonant/vowel coverage",
+      "tags": "pangram,coverage,baseline"
+    },
+    {
+      "id": "A2",
+      "cat": "pangram",
+      "text": "Pack my box with five dozen liquor jugs.",
+      "ref": "Pack my box with five dozen liquor jugs.",
+      "wer_max": 0.05,
+      "wpm": "150-190",
+      "snr_min": 20,
+      "pauses": "after=.;min=200;max=600",
+      "notes": "Consonant clusters; check /k g z ʒ/",
+      "tags": "pangram,coverage"
+    },
+    {
+      "id": "B1",
+      "cat": "numbers-units",
+      "text": "Set the gain to 3.5 decibels at 2 kilohertz.",
+      "ref": "Set the gain to three point five decibels at two kilohertz.",
+      "wer_max": 0.08,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "norm_rules": [
+        "num:3.5=>three point five|three and a half",
+        "num:2=>two",
+        "unit:decibels=>decibels|d b",
+        "unit:kilohertz=>kilohertz|kilo hertz|k h z"
+      ],
+      "tags": "numbers,units,normalization"
+    },
+    {
+      "id": "B2",
+      "cat": "dates-times",
+      "text": "Our meeting is on October 21, 2025 at 4:30 p.m.",
+      "ref": "Our meeting is on October twenty-first, twenty twenty-five at four thirty p m.",
+      "wer_max": 0.10,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "norm_rules": [
+        "date:October 21, 2025=>October twenty-first twenty twenty-five|October twenty first twenty twenty five",
+        "time:4:30 p.m.=>four thirty p m|four thirty in the afternoon",
+        "punct:ignore_commas_periods_in_asr_ref"
+      ],
+      "pauses": "after=twenty twenty-five;type=minor;min=100;max=350",
+      "tags": "dates,times,normalization"
+    },
+    {
+      "id": "C1",
+      "cat": "punctuation-pauses",
+      "text": "Wait… are you sure? Okay—let’s begin.",
+      "ref": "Wait are you sure Okay let's begin.",
+      "wer_max": 0.08,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "pauses": "after=Wait;type=ellipsis;min=250;max=600 | after=sure;type=question;min=150;max=400 | after=Okay;type=em-dash;min=150;max=400",
+      "intonation": "rise-before-?, reset-after-Okay",
+      "tags": "punctuation,pauses,prosody"
+    },
+    {
+      "id": "C2",
+      "cat": "punctuation-pauses",
+      "text": "One, two, three; ready, set, go.",
+      "ref": "One two three ready set go.",
+      "wer_max": 0.05,
+      "wpm": "150-190",
+      "snr_min": 20,
+      "pauses": "after=One;comma;min=80;max=220 | after=two;comma;min=80;max=220 | after=three;semicolon;min=150;max=350 | after=ready;comma;min=80;max=220 | after=set;comma;min=80;max=220",
+      "tags": "punctuation,pauses"
+    },
+    {
+      "id": "D1",
+      "cat": "acronyms-symbols",
+      "text": "Run the test on GPU, not CPU—ETA five minutes.",
+      "ref": "Run the test on G P U not C P U E T A five minutes.",
+      "wer_max": 0.10,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "norm_rules": [
+        "acronym:GPU=>G P U",
+        "acronym:CPU=>C P U",
+        "acronym:ETA=>E T A|estimated time of arrival",
+        "symbol:—=>expect_short_pause"
+      ],
+      "pauses": "after=CPU;type=em-dash;min=120;max=350",
+      "tags": "acronyms,symbols,normalization"
+    },
+    {
+      "id": "D2",
+      "cat": "acronyms-symbols",
+      "text": "Please email ops@company.com\n, subject: TTS-QA.",
+      "ref": "Please email ops at company dot com subject T T S Q A.",
+      "wer_max": 0.12,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "norm_rules": [
+        "email:ops@company.com=>ops at company dot com|ops at company dot com spelled out",
+        "subject:TTS-QA=>T T S Q A|T T S dash Q A"
+      ],
+      "pauses": "after=com;type=comma;min=100;max=300",
+      "tags": "email,acronyms,symbols"
+    },
+    {
+      "id": "E1",
+      "cat": "domain-ml",
+      "text": "Backpropagation adjusts weights via gradient descent.",
+      "ref": "Backpropagation adjusts weights via gradient descent.",
+      "wer_max": 0.06,
+      "wpm": "150-190",
+      "snr_min": 20,
+      "pron_rules": [
+        "term:Backpropagation|IPA=ˌbækprɒpəˈɡeɪʃən",
+        "term:gradient descent|IPA=ˈɡreɪdiənt dɪˈsɛnt"
+      ],
+      "tags": "ml,terminology"
+    },
+    {
+      "id": "E2",
+      "cat": "domain-signal",
+      "text": "Kalman filters estimate hidden states with Gaussian noise.",
+      "ref": "Kalman filters estimate hidden states with Gaussian noise.",
+      "wer_max": 0.08,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "pron_rules": [
+        "term:Kalman|preferred=Kal-man|allowed=Kahl-man",
+        "term:Gaussian|preferred=Gow-see-an|allowed=Gau-shn"
+      ],
+      "tags": "signal_processing,terminology"
+    },
+    {
+      "id": "F1",
+      "cat": "long-prosody",
+      "text": "When evaluating speech models, it’s essential to listen for clarity, pacing, and emotional tone. The model should handle commas with short pauses and full stops with longer breaks, producing natural rhythm and coherence throughout the passage.",
+      "ref": "When evaluating speech models it's essential to listen for clarity pacing and emotional tone. The model should handle commas with short pauses and full stops with longer breaks producing natural rhythm and coherence throughout the passage.",
+      "wer_max": 0.10,
+      "wpm": "135-175",
+      "snr_min": 20,
+      "pitch_stdev_min_semitones": 1.5,
+      "pauses": "after=models;comma;min=80;max=220 | after=tone;period;min=180;max=500",
+      "notes": "No audible gasps",
+      "tags": "prosody,long_form,breath"
+    },
+    {
+      "id": "F2",
+      "cat": "long-prosody",
+      "text": "As technology evolves, voice interfaces are becoming increasingly human-like. By combining deep learning with signal processing, modern TTS systems can convey subtle emotions, adjust speaking styles, and respond to context in real time.",
+      "ref": "As technology evolves voice interfaces are becoming increasingly human like. By combining deep learning with signal processing modern T T S systems can convey subtle emotions adjust speaking styles and respond to context in real time.",
+      "wer_max": 0.10,
+      "wpm": "135-175",
+      "snr_min": 20,
+      "pitch_stdev_min_semitones": 1.5,
+      "norm_rules": [
+        "acronym:TTS=>T T S|text to speech"
+      ],
+      "pauses": "after=evolves;comma;min=80;max=220 | after=human-like;period;min=180;max=500",
+      "tags": "prosody,long_form"
+    },
+    {
+      "id": "G1",
+      "cat": "code-switch",
+      "text": "Gracias por tu ayuda, see you mañana.",
+      "ref": "Gracias por tu ayuda see you manana.",
+      "wer_max": 0.12,
+      "wpm": "140-180",
+      "snr_min": 20,
+      "norm_rules": [
+        "lang:es=>Gracias por tu ayuda",
+        "token:mañana=>mañana|manana"
+      ],
+      "pauses": "after=ayuda;comma;min=80;max=220",
+      "tags": "spanish,code_switching,robustness"
+    }
+  ]
+}
