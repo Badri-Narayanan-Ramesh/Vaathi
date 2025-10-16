@@ -3,7 +3,7 @@ wrap it behind a small FastAPI /tts route so your quiz or collaboration clients 
 # QUIZ REQUIREMENTS
 
 - push-to-talk STT (local Whisper or OpenAI Whisper API)
-- “Speak it” TTS (local pyttsx3 or Coqui / ElevenLabs)
+- “Speak it” TTS (local pyttsx3 or Coqui)
 - a tiny Streamlit widget that fills quiz answers by voice and reads stems/rationales
 - hooks for Study-Jam (broadcast transcripts & “speaking” events)
 
@@ -17,7 +17,7 @@ wrap it behind a small FastAPI /tts route so your quiz or collaboration clients 
 # Fallbacks 
 
 - Mic not available → show a text box and a note: “Press 🔊 to hear; type to answer.”
-- TTS engine fails → failover order: pyttsx3 → Coqui → ElevenLabs.
+- TTS engine fails → failover order: pyttsx3 → Coqui.
 
 --- 
 

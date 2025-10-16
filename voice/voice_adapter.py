@@ -1,6 +1,6 @@
 # voice_adapter.py
 """
-Unified Voice Adapter: STT (Whisper local/API) + TTS (pyttsx3 / Coqui / ElevenLabs)
+Unified Voice Adapter: STT (Whisper local/API) + TTS (pyttsx3 / Coqui)
 
 Features
 - STT:
@@ -10,7 +10,6 @@ Features
 - TTS:
   - pyttsx3      : fully offline, OS voices; returns WAV bytes.
   - coqui        : local neural TTS via Coqui TTS; model configurable.
-  - elevenlabs   : cloud TTS; requires ELEVENLABS_API_KEY.
 - Utilities:
   - ensure_mono_16k()     : normalize WAV bytes to mono 16 kHz.
   - list_tts_voices()     : list available voices for current engine.
@@ -19,15 +18,8 @@ Features
   - Safe fallbacks & clear exceptions with actionable messages.
 
 Env Vars (optional)
-- STT_ENGINE=whisper_local|whisper_api     (default: whisper_local)
-- STT_MODEL=tiny|base|small|medium|large   (default: base)
-- STT_LANGUAGE=en|...                      (default: None->auto)
-- TTS_ENGINE=pyttsx3|coqui|elevenlabs      (default: pyttsx3)
-- TTS_RATE=integer speaking rate           (default: 180)
-- TTS_VOICE=engine-specific voice id/name  (default: None)
-- COQUI_MODEL=tts_models/en/vctk/vits      (default: vits above)
-- OPENAI_API_KEY=...                       (for whisper_api)
-- ELEVENLABS_API_KEY=...                   (for elevenlabs)
+- STT_ENGINE, STT_MODEL, OPENAI_API_KEY
+- TTS_ENGINE, TTS_VOICE, TTS_RATE, COQUI_MODEL
 """
 
 from __future__ import annotations
@@ -41,14 +33,19 @@ import numpy as np
 import soundfile as sf
 
 __all__ = [
-    "STTConfig", "STT",
-    "TTSConfig", "TTS",
+    "STTConfig",
+    "STT",
+    "TTSConfig",
+    "TTS",
     "ensure_mono_16k",
+    "list_tts_voices",  # Exposed for external use if needed
 ]
+
 
 # -----------------------------------------------------------------------------
 # Helpers
 # -----------------------------------------------------------------------------
+
 
 def _have_librosa() -> bool:
     try:
@@ -56,6 +53,7 @@ def _have_librosa() -> bool:
         return True
     except Exception:
         return False
+
 
 def _resample_mono(x: np.ndarray, sr: int, target_sr: int = 16000) -> Tuple[np.ndarray, int]:
     """Resample 1D mono to target_sr using librosa if available; else passthrough."""
@@ -68,156 +66,154 @@ def _resample_mono(x: np.ndarray, sr: int, target_sr: int = 16000) -> Tuple[np.n
     # Fallback: return original to avoid hard dependency
     return x, sr
 
+
 def ensure_mono_16k(wav_bytes: bytes) -> Tuple[np.ndarray, int]:
+    """Read arbitrary WAV bytes and return mono float32 at (≈)16 kHz.
+
+    If librosa is available the audio will be resampled; otherwise the
+    original sample rate is returned (caller should handle mismatches).
     """
-    Read arbitrary WAV/AIFF/FLAC bytes -> return mono float32 at (≈)16 kHz.
-    Uses librosa when available. If resample not possible, returns original sr.
-    """
-    y, sr = sf.read(io.BytesIO(wav_bytes), dtype="float32", always_2d=True)
-    y = y.mean(axis=1)  # to mono
+    y, sr = sf.read(io.BytesIO(wav_bytes), dtype="float32")
+    if y.ndim > 1:
+        y = y.mean(axis=1)
     y, sr = _resample_mono(y, sr, 16000)
     return y, sr
+
 
 # -----------------------------------------------------------------------------
 # STT
 # -----------------------------------------------------------------------------
 
+
 @dataclass
 class STTConfig:
-    engine: str = os.getenv("STT_ENGINE", "whisper_local")  # whisper_local | whisper_api
-    model: str = os.getenv("STT_MODEL", "base")             # tiny/base/small/...
-    language: Optional[str] = os.getenv("STT_LANGUAGE", None)
+    engine: str = os.getenv("STT_ENGINE", "whisper_local")
+    model: str = os.getenv("STT_MODEL", "base")
+    language: Optional[str] = None
+
 
 class STT:
+    """Speech-to-Text adapter.
+
+    Supported engines: whisper_local (requires openai-whisper) and
+    whisper_api (requires openai SDK and OPENAI_API_KEY). The adapter
+    normalizes incoming audio to mono/16k when possible.
     """
-    Speech-to-Text adapter.
-    - whisper_local: uses local Whisper (pip install openai-whisper)
-    - whisper_api  : uses OpenAI Whisper API (OPENAI_API_KEY required)
-    """
+
     def __init__(self, cfg: STTConfig = STTConfig()):
         self.cfg = cfg
         self._mode = self.cfg.engine.strip().lower()
         if self._mode not in {"whisper_local", "whisper_api"}:
             raise ValueError(f"Unsupported STT engine: {self._mode}")
 
-        if self._mode == "whisper_local":
-            try:
-                import whisper  # type: ignore
-            except Exception as e:
-                raise RuntimeError(
-                    "whisper_local selected but 'openai-whisper' is not installed. "
-                    "Install with: pip install openai-whisper"
-                ) from e
-            self._whisper = whisper.load_model(self.cfg.model)
-            self._client = None
-        else:
-            # whisper_api
+        self._whisper = None
+        self._client = None
+
+        if self._mode == "whisper_api":
             try:
                 from openai import OpenAI  # type: ignore
+
+                api_key = os.getenv("OPENAI_API_KEY", "").strip()
+                if not api_key:
+                    raise RuntimeError("OPENAI_API_KEY is required for whisper_api STT.")
+                self._client = OpenAI(api_key=api_key)
             except Exception as e:
-                raise RuntimeError(
-                    "whisper_api selected but 'openai' SDK is not installed. "
-                    "Install with: pip install openai"
-                ) from e
-            api_key = os.getenv("OPENAI_API_KEY", "").strip()
-            if not api_key:
-                raise RuntimeError("OPENAI_API_KEY is required for whisper_api STT.")
-            self._client = OpenAI(api_key=api_key)
-            self._whisper = None
+                raise RuntimeError("whisper_api selected but openai SDK failed to initialize") from e
+
+    def _ensure_whisper_local(self):
+        if self._whisper is None:
+            try:
+                import whisper  # type: ignore
+
+                self._whisper = whisper.load_model(self.cfg.model)
+            except Exception as e:
+                raise RuntimeError("Local whisper model load failed or 'openai-whisper' is not installed") from e
 
     def transcribe(self, wav_bytes: bytes) -> str:
-        """
-        Transcribe audio bytes into text. Normalizes to mono ~16 kHz for stability.
-        Returns a UTF-8 string (may be empty).
-        """
+        """Return transcription for given WAV bytes (string)."""
         audio, sr = ensure_mono_16k(wav_bytes)
         if self._mode == "whisper_local":
-            # whisper local needs a file path
-            with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as f:
-                sf.write(f.name, audio, sr)
-                out = self._whisper.transcribe(f.name, language=self.cfg.language)
+            self._ensure_whisper_local()
+            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+                tmp_path = f.name
+            try:
+                sf.write(tmp_path, audio, sr)
+                out = self._whisper.transcribe(tmp_path, language=self.cfg.language)
+            finally:
+                try:
+                    os.unlink(tmp_path)
+                except Exception:
+                    pass
             return (out.get("text") or "").strip()
-        else:
-            # OpenAI Whisper API
-            with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as f:
-                sf.write(f.name, audio, sr)
-                with open(f.name, "rb") as file:
-                    resp = self._client.audio.transcriptions.create(
-                        model="whisper-1",
-                        file=file,
-                        language=self.cfg.language
-                    )
-            # SDK returns .text
-            return (getattr(resp, "text", "") or "").strip()
+
+        # whisper_api
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+            tmp_path = f.name
+        try:
+            sf.write(tmp_path, audio, sr)
+            with open(tmp_path, "rb") as file:
+                resp = self._client.audio.transcriptions.create(
+                    model="whisper-1",
+                    file=file,
+                    language=self.cfg.language,
+                )
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except Exception:
+                pass
+        return (getattr(resp, "text", "") or "").strip()
+
 
 # -----------------------------------------------------------------------------
 # TTS
 # -----------------------------------------------------------------------------
 
+
 @dataclass
 class TTSConfig:
-    engine: str = os.getenv("TTS_ENGINE", "pyttsx3")  # pyttsx3 | coqui | elevenlabs
+    engine: str = os.getenv("TTS_ENGINE", "pyttsx3")
     voice: Optional[str] = os.getenv("TTS_VOICE", None)
-    rate: Optional[int] = int(os.getenv("TTS_RATE", "180"))
+    rate: Optional[int] = os.getenv("TTS_RATE", "180")
     coqui_model: str = os.getenv("COQUI_MODEL", "tts_models/en/vctk/vits")
-    target_sr: int = 16000  # normalize outputs for downstream STT
+    target_sr: int = 16000
+
+    def __post_init__(self):
+        if self.rate is not None:
+            self.rate = int(self.rate)
+
 
 class TTS:
-    """
-    Text-to-Speech adapter.
-    Engines:
-      - pyttsx3: offline, OS voices (good baseline).
-      - coqui : local neural TTS via Coqui TTS (pip install TTS).
-      - elevenlabs: cloud neural TTS (pip install elevenlabs).
-    """
+    """Text-to-Speech adapter with pyttsx3 and optional Coqui support."""
+
     def __init__(self, cfg: TTSConfig = TTSConfig()):
         self.cfg = cfg
         self._mode = self.cfg.engine.strip().lower()
-        if self._mode not in {"pyttsx3", "coqui", "elevenlabs"}:
+        if self._mode not in {"pyttsx3", "coqui"}:
             raise ValueError(f"Unsupported TTS engine: {self._mode}")
 
         self.engine = None
         self.coqui = None
-        self.eleven = None
 
         if self._mode == "pyttsx3":
             try:
                 import pyttsx3  # type: ignore
+
+                self.engine = pyttsx3.init()
+                if self.cfg.rate is not None:
+                    self.engine.setProperty("rate", self.cfg.rate)
+                if self.cfg.voice:
+                    self._set_pyttsx3_voice(self.cfg.voice)
             except Exception as e:
-                raise RuntimeError(
-                    "TTS engine 'pyttsx3' selected but module not installed. "
-                    "Install with: pip install pyttsx3"
-                ) from e
-            self.engine = pyttsx3.init()
-            if self.cfg.rate:
-                self.engine.setProperty("rate", int(self.cfg.rate))
-            if self.cfg.voice:
-                # Try to set by exact id or name (fallback fuzzy)
-                self._set_pyttsx3_voice(self.cfg.voice)
+                raise RuntimeError("pyttsx3 not available or failed to initialize") from e
 
         elif self._mode == "coqui":
             try:
                 from TTS.api import TTS as COQUI  # type: ignore
-            except Exception as e:
-                raise RuntimeError(
-                    "TTS engine 'coqui' selected but Coqui TTS is not installed. "
-                    "Install with: pip install TTS"
-                ) from e
-            self.coqui = COQUI(self.cfg.coqui_model)
 
-        else:  # elevenlabs
-            try:
-                import elevenlabs  # type: ignore
+                self.coqui = COQUI(model_name=self.cfg.coqui_model)  # Use model_name for newer TTS versions
             except Exception as e:
-                raise RuntimeError(
-                    "TTS engine 'elevenlabs' selected but SDK not installed. "
-                    "Install with: pip install elevenlabs"
-                ) from e
-            api_key = os.getenv("ELEVENLABS_API_KEY", "").strip()
-            if not api_key:
-                raise RuntimeError("ELEVENLABS_API_KEY is required for ElevenLabs TTS.")
-            elevenlabs.set_api_key(api_key)
-            self.eleven = elevenlabs
+                raise RuntimeError("Coqui TTS not available or failed to initialize") from e
 
     # ------------------- pyttsx3 helpers -------------------
 
@@ -227,23 +223,19 @@ class TTS:
             return
         try:
             voices = self.engine.getProperty("voices") or []
-            # exact id
             for v in voices:
                 if getattr(v, "id", "") == query:
                     self.engine.setProperty("voice", v.id)
                     return
-            # name contains
             qlow = query.lower()
             for v in voices:
                 name = getattr(v, "name", "") or ""
                 if qlow in name.lower():
                     self.engine.setProperty("voice", v.id)
                     return
-            # fallback: first voice
             if voices:
                 self.engine.setProperty("voice", voices[0].id)
         except Exception:
-            # Safe to ignore: keep engine defaults
             pass
 
     def list_tts_voices(self) -> List[Dict[str, Any]]:
@@ -261,31 +253,22 @@ class TTS:
                     })
             except Exception:
                 pass
-        elif self._mode == "coqui":
-            out.append({"model": self.cfg.coqui_model})
-        elif self._mode == "elevenlabs":
-            try:
-                # Ensure elevenlabs client exists
-                if self.eleven:
-                    # SDK voice list:
-                    # new SDKs: elevenlabs.voices() or elevenlabs.get_voices()
-                    get_voices = getattr(self.eleven, "voices", None) or getattr(self.eleven, "get_voices", None)
-                    if get_voices:
-                        voices = get_voices()
-                        for v in voices:
-                            out.append({"id": getattr(v, "voice_id", None) or getattr(v, "id", None),
-                                        "name": getattr(v, "name", None)})
-            except Exception:
-                pass
+        elif self._mode == "coqui" and self.coqui:
+            # For Coqui, list speakers if multi-speaker model
+            speakers = getattr(self.coqui, "speakers", None)
+            if speakers:
+                for s in speakers:
+                    out.append({"speaker": s})
+            else:
+                out.append({"model": self.cfg.coqui_model})
         return out
 
     def set_voice(self, voice_id_or_name: str) -> None:
         """Change voice at runtime (engine-specific implementation)."""
         if self._mode == "pyttsx3":
             self._set_pyttsx3_voice(voice_id_or_name)
-        else:
-            # For coqui/elevenlabs, voice selection can be part of synth() call or config.
-            self.cfg.voice = voice_id_or_name
+        elif self._mode == "coqui":
+            self.cfg.voice = voice_id_or_name  # Store for use in synth if applicable
 
     def set_rate(self, rate: int) -> None:
         self.cfg.rate = rate
@@ -294,24 +277,25 @@ class TTS:
                 self.engine.setProperty("rate", int(rate))
             except Exception:
                 pass
+        # Coqui does not support rate change via this API easily; ignore or extend if needed
 
     # ------------------- TTS core -------------------
 
     def synth(self, text: str) -> bytes:
-        """
-        Synthesize text to WAV bytes. Output is mono ~16 kHz when possible.
-        """
+        """Synthesize text to WAV bytes. Output is mono ~16 kHz when possible."""
         if self._mode == "pyttsx3":
             return self._synth_pyttsx3(text)
         elif self._mode == "coqui":
             return self._synth_coqui(text)
         else:
-            return self._synth_elevenlabs(text)
+            raise RuntimeError(f"Unsupported TTS engine at runtime: {self._mode}")
 
     def synth_to_file(self, text: str, path: str) -> None:
         """Synthesize and save directly to a file (WAV)."""
-        audio = self.synth(text)
-        y, sr = sf.read(io.BytesIO(audio), dtype="float32")
+        audio_bytes = self.synth(text)
+        y, sr = sf.read(io.BytesIO(audio_bytes), dtype="float32")
+        if y.ndim > 1:
+            y = y.mean(axis=1)
         sf.write(path, y, sr)
 
     # ------------------- Engine implementations -------------------
@@ -320,17 +304,17 @@ class TTS:
         if not self.engine:
             raise RuntimeError("pyttsx3 engine not initialized.")
 
-        tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
-        tmp_path = tmp.name
-        tmp.close()
-
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+            tmp_path = tmp.name
         try:
-            # (Rate/voice already set in __init__/set_rate/set_voice)
             self.engine.save_to_file(text, tmp_path)
             self.engine.runAndWait()
 
-            audio, sr = sf.read(tmp_path, dtype="float32", always_2d=True)
-            mono = audio.mean(axis=1)
+            audio, sr = sf.read(tmp_path, dtype="float32")
+            if audio.ndim > 1:
+                mono = audio.mean(axis=1)
+            else:
+                mono = audio
             mono, sr = _resample_mono(mono, sr, target_sr=self.cfg.target_sr)
 
             buf = io.BytesIO()
@@ -338,43 +322,25 @@ class TTS:
             return buf.getvalue()
         finally:
             try:
-                os.remove(tmp_path)
+                os.unlink(tmp_path)
             except Exception:
                 pass
 
     def _synth_coqui(self, text: str) -> bytes:
         if not self.coqui:
             raise RuntimeError("Coqui TTS model not initialized.")
-        # Many coqui models return a numpy array (float32) at 22.05k or 24k
-        wav = self.coqui.tts(text)  # can also pass speaker_id/language if model supports
+        # Handle speaker if set and model supports it
+        kwargs = {}
+        if self.cfg.voice and getattr(self.coqui, "speakers", None):
+            kwargs["speaker"] = self.cfg.voice
+        wav = self.coqui.tts(text=text, **kwargs)
+        if isinstance(wav, list):
+            wav = np.array(wav)
         wav = np.asarray(wav, dtype=np.float32)
-        mono, sr = _resample_mono(wav, getattr(self.coqui, "output_sample_rate", 22050), self.cfg.target_sr)
+        if wav.ndim > 1:
+            wav = wav.mean(axis=1)
+        output_sr = self.coqui.synthesizer.output_sample_rate
+        mono, sr = _resample_mono(wav, output_sr, self.cfg.target_sr)
         buf = io.BytesIO()
         sf.write(buf, mono, sr, format="WAV")
-        return buf.getvalue()
-
-    def _synth_elevenlabs(self, text: str) -> bytes:
-        if not self.eleven:
-            raise RuntimeError("ElevenLabs client not initialized.")
-        # SDK generate() -> bytes or iterable of bytes (depending on SDK/version).
-        voice = self.cfg.voice or "Rachel"
-        try:
-            audio = self.eleven.generate(text=text, voice=voice)
-        except TypeError:
-            # Fallback in case newer SDK signature requires model/options:
-            audio = self.eleven.generate(text=text, voice=voice)  # adapt here as needed
-
-        # Many SDK versions return bytes directly; some return iterable chunks
-        if isinstance(audio, (bytes, bytearray)):
-            raw = bytes(audio)
-        else:
-            # concatenate chunks
-            raw = b"".join(audio)
-
-        # Normalize to mono ~16 kHz for consistency
-        y, sr = sf.read(io.BytesIO(raw), dtype="float32", always_2d=True)
-        y = y.mean(axis=1)
-        y, sr = _resample_mono(y, sr, self.cfg.target_sr)
-        buf = io.BytesIO()
-        sf.write(buf, y, sr, format="WAV")
         return buf.getvalue()
