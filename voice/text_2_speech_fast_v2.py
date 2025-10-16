@@ -28,6 +28,18 @@ import soundfile as sf
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
+def list_pyttsx3_voices() -> None:
+    """Print available pyttsx3 voices (id and name), then exit."""
+    eng = pyttsx3.init()
+    try:
+        for v in eng.getProperty("voices") or []:
+            print(f"{v.id}\t{getattr(v, 'name', '')}")
+    finally:
+        try:
+            eng.stop()
+        except Exception:
+            pass
+
 # =========================
 # pyttsx3 TTS (fresh engine per call to avoid rare hangs)
 # =========================
@@ -307,6 +319,7 @@ TEST_SENTENCES = [
      "improves prosody: commas, periods, and dashes guide the rhythm and phrasing of the spoken output."),
 ]
 
+
 # =========================
 # CLI
 # =========================
@@ -328,6 +341,7 @@ def _print_table(rows: List[Dict[str, Any]]):
         ]))
 
 def main():
+    
     parser = argparse.ArgumentParser(description="Fast TTS baseline + metrics + Whisper WER")
     parser.add_argument("--out", default="tts_sample.wav", help="Output WAV for first sample or all-in-one")
     parser.add_argument("--rate", type=int, default=170, help="TTS voice rate")
@@ -338,7 +352,12 @@ def main():
     parser.add_argument("--cuda", action="store_true", help="Use GPU for Whisper if available")
     parser.add_argument("--all-in-one", action="store_true", help="Concatenate all sentences into one WAV")
     parser.add_argument("--silence-sec", type=float, default=0.5, help="Silence between sentences in concat")
+    parser.add_argument("--list-voices", action="store_true", help="List available pyttsx3 voices and exit")
     args = parser.parse_args()
+
+    if args.list_voices:
+        list_pyttsx3_voices()
+        return
 
     print("== Fast TTS baseline ==")
     rows: List[Dict[str, Any]] = []
