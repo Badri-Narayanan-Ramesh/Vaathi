@@ -7,7 +7,7 @@ from __future__ import annotations
 import hashlib
 import os
 import time
-from typing import Optional
+from typing import Optional, Dict
 
 import requests
 
@@ -47,6 +47,83 @@ def generate(prompt: str, sys_prompt: Optional[str] = None) -> str:
         local_out = _generate_ollama(prompt, sys_prompt)
         return local_out or out
     return out
+
+
+def _sanitize_model_output(raw: str) -> str:
+    """Remove any assistant/system/user scaffolding or role-prefixed lines.
+
+    Keeps the text compact and trims excessive whitespace.
+    """
+    if not isinstance(raw, str):
+        return ""
+    # Remove common role prefixes like 'assistant:' or 'User:' at line starts
+    lines = []
+    for line in raw.splitlines():
+        s = line.strip()
+        # strip role tokens if they appear like 'assistant: text' or 'User:'
+        if s.lower().startswith("assistant:") or s.lower().startswith("system:") or s.lower().startswith("user:"):
+            s = s.split(":", 1)[1].strip()
+        lines.append(s)
+    out = "\n".join([l for l in lines if l])
+    # Collapse repeated blank lines
+    while "\n\n\n" in out:
+        out = out.replace("\n\n\n", "\n\n")
+    return out.strip()
+
+
+def generate_with_metadata(
+    prompt: str,
+    sys_prompt: Optional[str] = None,
+    timeout: float = 25.0,
+    max_retries: int = 3,
+    fallback_text: str = "I'm sorry — I couldn't generate an answer right now.",
+) -> Dict[str, object]:
+    """Call the configured backend and return sanitized text plus metadata.
+
+    Guarantees a non-empty 'text' field (uses fallback_text on error).
+    Returns a dict: {text, raw, meta: {backend, attempts, elapsed, error}}
+    """
+    attempts = 0
+    start = time.time()
+    last_err = None
+    raw_out = ""
+    backend = os.getenv("APP_MODE", "cloud").lower()
+
+    for attempt in range(1, max_retries + 1):
+        attempts = attempt
+        try:
+            # timeout at the function level using time checks — backends may not accept timeouts
+            t0 = time.time()
+            raw_out = generate(prompt, sys_prompt=sys_prompt)
+            elapsed = time.time() - t0
+            # quick sanity: if it looks like an error token from our implementations, treat as failure
+            if isinstance(raw_out, str) and raw_out.startswith("[openai-error]"):
+                last_err = raw_out
+                raise RuntimeError(raw_out)
+            # success
+            break
+        except Exception as e:  # noqa: BLE001 - we want to capture any failure and continue
+            last_err = str(e)
+            _retry_sleep(attempt)
+            # continue to next attempt
+
+    total_elapsed = time.time() - start
+    sanitized = _sanitize_model_output(raw_out) if raw_out else ""
+    if not sanitized:
+        sanitized = fallback_text
+
+    meta = {
+        "backend": backend,
+        "attempts": attempts,
+        "elapsed": round(total_elapsed, 3),
+        "error": last_err,
+    }
+
+    return {
+        "text": sanitized,
+        "raw": raw_out,
+        "meta": meta,
+    }
 
 
 def _generate_gemini(prompt: str, sys_prompt: Optional[str]) -> str:

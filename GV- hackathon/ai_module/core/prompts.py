@@ -47,6 +47,33 @@ CHEATSHEET_FROM_CONTEXT = (
 )
 
 
+# === Voice-friendly prompts ===
+VOICE_EXPLAIN_SHORT = (
+    "You are a friendly spoken-word tutor. Speak in short, clear sentences suitable for Text-to-Speech.",
+    "Use natural rhythm, simple vocabulary, and include brief pauses where appropriate.",
+    "Provide 3–5 short bullets that can be spoken one at a time, and finish with a single 1–2 sentence summary.",
+    "Do not use markup or lists characters like '-' or '*' — produce plain text lines separated by newlines.",
+)
+
+
+VOICE_ANSWER_SHORT = (
+    "Answer the question as if speaking to a student. Use short sentences and a calm, neutral tone.",
+    "If you must cite slides, place citations in parentheses like (Slide 3). Keep them brief.",
+    "Avoid long paragraphs; prefer 2–4 short sentences. Make the response TTS-friendly (no extra brackets or role tags).",
+)
+
+
+def render_voice_prompt(base_text: str, extra_instructions: list[str] | None = None) -> str:
+    """Compose a voice-friendly system prompt combining base text and optional extra instructions.
+
+    Keeps outputs plain and TTS-ready.
+    """
+    parts = [base_text.strip()]
+    if extra_instructions:
+        parts.extend(i.strip() for i in extra_instructions if i)
+    return "\n".join(parts)
+
+
 def render_ctx_blocks(contexts: List[str]) -> str:
     """Join context blocks using a clear separator for the LLM."""
     ctxs = [c.strip() for c in contexts if c and isinstance(c, str)]
