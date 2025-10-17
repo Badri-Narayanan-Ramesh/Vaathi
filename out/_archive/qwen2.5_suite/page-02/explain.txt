@@ -1,0 +1,8 @@
+- **Training Stability:** The model's performance becomes more consistent as the training progresses, with fewer fluctuations in loss and coverage metrics.
+- **Mode Collapse Start:** Mode collapse starts around epoch 20-30, where the sharp decline in coverage indicates a shift towards fewer distinct modes.
+- **Early Epochs:** At the beginning of training (epochs 0-10), high apparent coverage is due to random initialization differences that create variety initially.
+- **Mid-Training Phase:** In the middle of training (epoch 20-50), the model converges to using only a few distinct modes, leading to mode collapse.
+- **Stabilization in Later Stages:** By later stages (epochs 50+), the model stabilizes with reduced coverage and persistent limitations on the number of modes used.
+
+Summary:
+Throughout training, the system’s performance improves steadily. However, around the 20th to 30th epoch, significant shifts occur as the model begins converging to only a few distinct patterns, leading to mode collapse. This process starts relatively smoothly initially but intensifies during mid-training and persists throughout later stages where coverage remains low but with limited variability in modes used.

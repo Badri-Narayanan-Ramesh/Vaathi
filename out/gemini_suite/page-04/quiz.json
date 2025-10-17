@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1) According to the context, which of these methods helped in preventing posterior collapse?",
+    "options": [
+      "A) KL annealing alone.",
+      "B) Combination of free bits and latent variation experiments.",
+      "C) Free bits only without latent dimension control.",
+      "D) Latent variation experiments with complexity control techniques like humanization."
+    ]
+  },
+  {
+    "q": "2) What can be inferred about the influence of a single latent dimension based on this context?",
+    "options": [
+      "A) It has no effect on generated patterns and instrument activation.",
+      "B) Altering it does not change pattern density or musical properties such as timing.",
+      "C) Sweeping one dimension affects both pattern density and specific aspects like timing and instrument usage.",
+      "D) A single latent dimension solely controls the color variation in outputs without changing other attributes."
+    ]
+  },
+  {
+    "q": "3) How would you describe the result of humanization experiments on generated patterns?",
+    "options": [
+      "A) They led to no discernible changes from input noise.",
+      "B) Subtle timing and instrument alterations emerged that align with a musical context when varied across latent dimensions.",
+      "C) Humanized outputs showed increased dissimilarity in melody but constant rhythm between variations.",
+      "D) The results indicated improved pitch accuracy without affecting the pattern or tempo variability."
+    ],
+    "answers": "Answers: 1) B, 2) C, 3) B"
+  }
+]

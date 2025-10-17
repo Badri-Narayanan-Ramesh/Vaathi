@@ -1,0 +1,6 @@
+[
+  {
+    "q": "RAW",
+    "a": "Q1: At what point in training does the sharp decline of coverage metrics typically begin?\nA1: Around epoch 20-30.\n\nQ2: Why is high apparent coverage observed during early epochs (0-1enzymes)?\nA2: Due to random initialization diversity.\n\nQ3: What happens in the critical collapse period of mid-training?\nA3: Generator converges to limited modes, leading to reduced loss stability and mode collapse.\n\nQ4: How does coverage change after epoch 50 during late training phases?\nA4: Coverage levels stabilize at a lower point with persistent limitations in the diversity of generated samples.\n\nQ5: What is one key difference between early, mid, and late-training stages regarding stability and mode collapse?\nA5: Early (high coverage due to randomness), Mid (collapse begins leading to less stable dynamics), Late (stabilization at reduced levels with persistent limitations)."
+  }
+]

@@ -1,0 +1,33 @@
+/* Custom overrides for dark mode and AskPanel input */
+
+/* Fix model selector dropdown in dark mode */
+.dark .model-select, .model-select.dark, .dark .model-select option, .model-select.dark option {
+  background-color: #23272f !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #3a3f4b !important;
+}
+
+/* AskPanel expanding textarea style */
+.ask-textarea {
+  min-height: 48px;
+  max-height: 200px;
+  resize: none;
+  overflow-y: auto;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid hsl(var(--input));
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.ask-textarea:focus {
+  outline: none;
+  border-color: hsl(var(--ring));
+}
+.dark .ask-textarea {
+  background: #181c23 !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #3a3f4b !important;
+}

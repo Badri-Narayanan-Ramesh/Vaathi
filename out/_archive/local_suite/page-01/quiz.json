@@ -1,0 +1,29 @@
+[
+  {
+    "q": "1. What is one reason why certain letters like A, C, and G appear to be learned better by feature-matching models compared to vanilla ones?",
+    "options": [
+      "A) They have rounder edges that are harder to learn.",
+      "B) Their sharper edges make them easier for the model to distinguish.",
+      "C) Feature-matching is not suited for these letters at all.",
+      "D) The frequency of their appearance in English text has declined over time."
+    ]
+  },
+  {
+    "q": "2. How does feature-matching GAN compare with vanilla GAN regarding letter diversity and mode coverage based on the quantitative comparison mentioned?",
+    "options": [
+      "A) Feature-matching maintains similar level of coverage as vanilla but lacks diversity in shapes.",
+      "B) Vanilla shows higher coverage, while feature-matching excels at creating recognizable letters with better shape quality.",
+      "C) Both methods show equal performance across all aspects mentioned.",
+      "D) There is no significant difference between the two GAN types regarding these factors."
+    ]
+  },
+  {
+    "q": "3. What aspect of letter generation does the quantitative comparison suggest needs improvement in vanilla GAN?",
+    "options": [
+      "A) The ability to generate high-frequency letters like 'E' and 'T'.",
+      "B) Mode coverage, which drops significantly compared to feature-matching GANs.",
+      "C) Recognizable shape quality of generated letter images.",
+      "D) Avoiding the overproduction of vowels in outputted text."
+    ]
+  }
+]

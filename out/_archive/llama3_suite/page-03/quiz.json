@@ -1,0 +1,29 @@
+[
+  {
+    "q": "1. What was one key benefit of using feature-matching stabilization in OCR?",
+    "options": [
+      "A) Improved letter recognition only",
+      "B) Reduced artifacts and improved visual quality",
+      "C) Increased training time",
+      "D) Decreased accuracy in cancer diagnosis"
+    ]
+  },
+  {
+    "q": "2. How did the training curves compare with vanilla baseline after implementing feature-matching stabilization?",
+    "options": [
+      "A) More oscillation patterns",
+      "B) Less stable convergence",
+      "C) Reduced oscillation patterns",
+      "D) No noticeable difference"
+    ]
+  },
+  {
+    "q": "3. What was one advantage of using feature-matching stabilization to prevent?",
+    "options": [
+      "A) Overfitting during training",
+      "B) Underfitting during testing",
+      "C) Discriminator overpowering",
+      "D) Model instability"
+    ]
+  }
+]

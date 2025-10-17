@@ -1,14 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Box } from "@mantine/core";
-import * as pdfjsLib from "pdfjs-dist";
-
-if (typeof window !== "undefined") {
-  // Tell pdf.js to use an ESM worker that webpack can bundle
-  (pdfjsLib as any).GlobalWorkerOptions.workerPort = new Worker(
-    new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url),
-    { type: "module" }
-  );
-}
 
 type Props = {
   fileUrl: string;
@@ -19,12 +10,22 @@ type Props = {
 
 export default function PdfSlides({ fileUrl, page, onNumPages, scale = 1.4 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const pdfRef = useRef<pdfjsLib.PDFDocumentProxy | null>(null);
+  const pdfRef = useRef<any>(null);
+  const libRef = useRef<any>(null);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const task = pdfjsLib.getDocument(fileUrl);
+      if (typeof window === "undefined") return;
+      // Dynamically import pdf.js only on the client to avoid SSR issues
+      const pdfjsLib = (await import("pdfjs-dist")).default || (await import("pdfjs-dist"));
+      libRef.current = (pdfjsLib as any);
+      try {
+        (libRef.current as any).GlobalWorkerOptions.workerSrc =
+          "https://unpkg.com/pdfjs-dist@4.10.38/build/pdf.worker.min.js";
+      } catch {}
+
+      const task = (libRef.current as any).getDocument(fileUrl);
       const doc = await task.promise;
       if (cancelled) return;
       pdfRef.current = doc;

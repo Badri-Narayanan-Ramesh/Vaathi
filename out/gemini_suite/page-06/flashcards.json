@@ -1,0 +1,18 @@
+[
+  {
+    "q": "What is the main difference between Cyclical and Linear annealing?",
+    "a": "Cyclical alternates, while linear monotonically increases."
+  },
+  {
+    "q": "How does cyclical annealing impact pattern diversity compared to linear annealing?",
+    "a": "Maintains higher (2-3x) than linear's output."
+  },
+  {
+    "q": "Why might Linear Annealing lead to premature collapse in patterns?",
+    "a": "Often causes repetitive patterns due to monotonic increase without breaks."
+  },
+  {
+    "q": "In what way does Cyclical Annealing help maintain diversity and coherence musically?",
+    "a": "By giving periodic breaks from the KL constraint, sustaining 2-3x higher pattern diversity with more coherent outputs."
+  }
+]

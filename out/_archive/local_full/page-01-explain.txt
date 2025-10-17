@@ -1,0 +1,11 @@
+• A, C, G are more visible due to sharper edges aiding learning.
+
+• X, Y, Z appear less frequently but not completely absent in mode collapse cases.
+
+• Feature-matching models perform better at letter diversity and recognizability compared to vanilla baselines.
+
+• Improvement from ~0.6-0.7 coverage without fix to ~0.7-0.8 with feature matching applied is quantified, illustrating enhanced performance in mode collapse scenarios.
+
+
+Summary:
+In the analysis of EE641 Homework 2 by Vivin Thiyagarajan, it's noted that letters like A and G are more resilient to mode collapse due to sharper edges which facilitate learning; X, Y, Z still appear but less frequently. Feature-matching models show better performance in maintaining letter diversity compared to vanilla baselines, as demonstrated by improved coverage rates post fix implementation.

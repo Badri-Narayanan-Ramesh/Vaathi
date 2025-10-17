@@ -1,0 +1,17 @@
+I'd be happy to help you understand this page!
+
+So, let's break down what we're looking at. We have two main questions here:
+
+1. Why did some letters, like O and A, survive the collapse of the model while others, like Q and X, disappeared?
+2. How does our chosen fix, called feature-matching GAN, compare to a simpler version of GAN (vanilla GAN) in terms of letter diversity and quality?
+
+Here are some key points to remember:
+
+• Think about why certain letters might be easier or harder for the model to learn. Letters like A, C, and G have sharper edges, making them easier to recognize.
+• Even though X, Y, and Z didn't completely disappear, they still got "missed" by the model, especially when it came to smoother shapes like O.
+• When we compare our feature-matching GAN to vanilla GAN, we see that our fix improves letter diversity a lot. The feature-matching model handles this better overall!
+• Interestingly, while vanilla GAN's coverage drops to around 0.6-0.7, our feature-matching model maintains coverage around 0.7-0.8.
+
+In simple terms, our chosen fix helps the model learn and recognize letters more effectively, especially those with sharper edges or smoother shapes. This means that our fix improves letter diversity and quality in the output!
+
+Summary: Our fix, feature-matching GAN, improves letter recognition by making it easier for the model to learn and handle different letter shapes.

@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1) How well do generated jazz patterns reflect realistic timing and structure?",
+    "options": [
+      "A) They lack rhythmic coherence.",
+      "B) Realistically capture jazz-specific traits like syncopation and complexity (Correct Answer).",
+      "C) Sound generic with no specific genre elements.",
+      "D) Show disorganized variations in timekeeping."
+    ]
+  },
+  {
+    "q": "2) What is the focus of Figure 5?",
+    "options": [
+      "A) A comparison between annealing strategies for drum patterns.",
+      "B) An analysis of jazz pattern structure and timing. (Correct Answer).",
+      "C) Interpretation of data without a specific emphasis on music generation quality or strategy comparison.",
+      "D) Visualization unrelated to the context given in this document."
+    ]
+  },
+  {
+    "q": "3) How do cyclical annealing strategies compare with linear ones, based on Figure 4?",
+    "options": [
+      "A) Cyclical methods are superior for jazz pattern creation due to their complexity.",
+      "B) Linear and cyclical methods provide similar results; no clear advantage can be determined from the figure alone. (Correct Answer).",
+      "C) Linear annealing strategies produce more coherent drum patterns with less variation.",
+      "D) The document does not compare different annealing strategies effectively in Figure 4."
+    ],
+    "answers": "Answers: 1) B, 2) B, 3) B"
+  }
+]

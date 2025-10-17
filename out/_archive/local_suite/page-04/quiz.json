@@ -1,0 +1,32 @@
+[
+  {
+    "q": "1. What method was used to prevent posterior collapse in the model?",
+    "options": [
+      "A) KL annealing alone",
+      "B) Free bits allocation without KL annealing or latent variation experiments",
+      "C) Both A and B, along with diverse outputs as shown by nonzero KL divergence",
+      "D) Neither A nor B; other unspecified methods were used to prevent collapse"
+    ],
+    "answers": "Answers: C"
+  },
+  {
+    "q": "2. What is observed when a single latent dimension (complexity control) is swept in the experiments?",
+    "options": [
+      "A) No change in pattern density or instrument activation occurs",
+      "B) Only changes in musical properties such as timing are seen, not density or instruments",
+      "C) Changes occur exclusively in pattern size and color variation without affecting timings or instruments",
+      "D) Alters both pattern density and leads to different levels of instrument usage while also being related to rhythm patterns (timing control)"
+    ],
+    "answers": "Answers: D"
+  },
+  {
+    "q": "3. How can it be concluded that each latent dimension learned a unique aspect controllable by the model?",
+    "options": [
+      "A) Every output is identical regardless of input variation, showing no learning specificity among dimensions",
+      "B) Outputs display non-uniform responses across different patterns when varying single or multiple latent codes simultaneously (latent variable exploration experiments), indicating distinct control over various properties such as timing and instrumentation by each dimension",
+      "C) Only one output pattern changes at a end, regardless of the number of varied dimensions",
+      "D) The model shows consistent behavior in controlling density but is unresponsive to variations in complexity or humanization across different latent inputs"
+    ],
+    "answers": "Answers: B"
+  }
+]

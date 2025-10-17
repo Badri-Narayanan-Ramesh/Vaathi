@@ -1,0 +1,19 @@
+[
+  {
+    "options": [
+      "A) It results in patterns that are too diverse.",
+      "B) It leads to premature collapse and repetitive patterns.",
+      "C) It sustains diversity for longer periods.",
+      "D) It decreases musically coherent outputs.",
+      "A) More diverse output patterns with higher musical coherence.",
+      "B) Less pattern diversity and more repetitive results that are less musically coherent.",
+      "C) The same level of pattern diversity but improved energy usage efficiency.",
+      "D) Variable outputs unrelated to annealing methods used.",
+      "A) Temperature consistency throughout the process.",
+      "B) Energy consumption during breaks in KL constraint imposition.",
+      "C) Diversity of output patterns and musical coherence.",
+      "D) Speed at which diversity can be achieved without any constraints."
+    ],
+    "answers": "Answers: 1) B, 2) B, 3) C."
+  }
+]

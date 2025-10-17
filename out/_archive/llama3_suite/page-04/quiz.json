@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. What was prevented by KL annealing in the model's posterior collapse?",
+    "options": [
+      "A) Increased pattern diversity",
+      "B) Decreased pattern density",
+      "C) Posterior collapse itself",
+      "D) Latent variation"
+    ]
+  },
+  {
+    "q": "2. How does sweeping a single latent dimension affect generated patterns?",
+    "options": [
+      "A) It increases instrument usage",
+      "B) It decreases timing and density",
+      "C) It alters pattern density and instrument activation",
+      "D) It eliminates distinct musical properties"
+    ]
+  },
+  {
+    "q": "3. What was observed in the humanization experiment?",
+    "options": [
+      "A) Subtle changes in pattern density",
+      "B) Clear changes in instrument activation",
+      "C) Subtle timing and instrument changes from latent noise",
+      "D) No visible effects on generated patterns"
+    ],
+    "answers": "Answers: 1) C, 2) C, 3) C"
+  }
+]

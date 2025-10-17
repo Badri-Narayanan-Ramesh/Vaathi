@@ -1,0 +1,8 @@
+- Cyclical annealing cycles between strictness and relaxation, helping maintain a diverse range of outputs.
+- Linear annealing can lead to patterns repeating too quickly, sometimes even collapsing prematurely.
+- Cyclical annealing is better at preserving diversity in outputs compared to linear annealing.
+- The key difference is that cyclical annealing allows for natural breaks and gradual changes, rather than sudden shifts.
+- As a result, cyclical annealing often produces more varied and musical outputs.
+
+Summary:
+Cyclical annealing helps maintain variety by alternating between strictness and relaxation. This method avoids the pitfalls of linear annealing, which can lead to repetitive or collapsed patterns. By doing so, cyclical annealing results in better diversity and more musically coherent outcomes.

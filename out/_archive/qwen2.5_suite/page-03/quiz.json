@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1) What does feature-matching stabilization prevent?",
+    "options": [
+      "A) Overfitting",
+      "B) Discriminator overpowering",
+      "C) Data leakage",
+      "D) Model underfitting"
+    ]
+  },
+  {
+    "q": "2) How do generated samples from feature-matching stabilization improve compared to vanilla baseline?",
+    "options": [
+      "A) By increasing computational speed",
+      "B) By improving visual quality and reducing artifacts",
+      "C) By decreasing the number of required training epochs",
+      "D) By enhancing text generation accuracy"
+    ]
+  },
+  {
+    "q": "3) What does a stable convergence with reduced oscillation patterns in training curves indicate about the technique?",
+    "options": [
+      "A) It is less effective",
+      "B) It has a lower chance of encountering vanishing gradients",
+      "C) It results in more noisy predictions",
+      "D) It requires larger datasets for better performance"
+    ],
+    "answers": "Answers: 1) B, 2) D, 3) B"
+  }
+]

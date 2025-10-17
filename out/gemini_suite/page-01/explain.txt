@@ -1,0 +1,11 @@
+Bullet 1: Letters with clear edges, such as A and C, are easier for the model to learn.
+
+Bullet 2: The presence of X, Y, and Z in the output suggests that these letters survive despite their smoothness.
+
+Bullet 3: Although feature-matching models perform better than baseline GANs overall, they sometimes still fail with simpler shapes like O.
+
+Bullet 4: Compared to a basic GAN model without improvements (baseline), the feature-matched version maintains higher quality and more diverse letter outputs when faced with complex images containing multiple characters.
+
+Bullet 5: The graph likely illustrates that certain letters appear more frequently in generated text while others are less common, possibly due to their representation within the model's training data or learning complexity.
+
+Summary: Problem 1 examines how some simple and ambiguous-shaped letters like O resist disappearing during mode collapse when using a feature-matching GAN (GAN) for image generation tasks as opposed to basic vanilla GAN, which struggles with such complex scenarios but still tends to prioritize the appearance of more easily recognizable characters.

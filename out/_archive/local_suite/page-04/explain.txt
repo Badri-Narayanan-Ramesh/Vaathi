@@ -1,0 +1,9 @@
+Bullets:
+- KL annealing combined with free bits prevented posterior collapse.
+- Latent variation experiments show distinct changes in patterns controllable by each latent dimension.
+- Humanization experiment indicates subtle timing and instrumentation variations from random noise inputs.
+- Altering a single latent dimension directly affects pattern density and instruments used, evidencing learned control over musical properties.
+- The visual representation of these effects includes line graphs depicting the relationship between input parameters (latent dimensions) and observed outputs (musical patterns).
+
+Summary: 
+The study's findings indicate that latent dimension manipulation allows for granular control over specific musical features such as density, timing, and instrument usage. This level of fine-tuning is achieved through techniques like KL annealing with free bits to prevent model collapse.

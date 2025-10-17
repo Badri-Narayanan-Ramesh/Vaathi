@@ -1,0 +1,44 @@
+[
+  {
+    "answers": "Answers:"
+  },
+  {
+    "q": "1) B,",
+    "options": []
+  },
+  {
+    "q": "2) D,",
+    "options": []
+  },
+  {
+    "q": "3) A",
+    "options": []
+  },
+  {
+    "q": "1. In Figure 5, which best describes the effect of the style transfer model?",
+    "options": [
+      "A) Successful adaptation of style with unchanged rhythmic structure.",
+      "B) High success rate across all tested genres.",
+      "C) Style inconsistency across different music genres.",
+      "D) Minimal impact on rhythm preservation."
+    ]
+  },
+  {
+    "q": "2. What does \"core rhythmic structure remains intact\" in Figure 5 indicate?",
+    "options": [
+      "A) The samples have consistent and original beats.",
+      "B) The model preserves the original tempo of the songs.",
+      "C) There is no variation or change in the beat patterns.",
+      "D) Both A and B are correct."
+    ]
+  },
+  {
+    "q": "3. What does \"High transfer success (>80%)\" mean for the style transfer model?",
+    "options": [
+      "A) It indicates a failure to adapt any styles correctly.",
+      "B) Only 20% of the styles transferred successfully.",
+      "C) The success rate is less than average, below 50%.",
+      "D) More than half of the samples show successful style adaptation."
+    ]
+  }
+]

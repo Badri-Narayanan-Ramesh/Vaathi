@@ -1,0 +1,7 @@
+### EE641 Homework 2 - Problem Analysis Cheatsheet ###
+- **Letter Survival in Mode Collapse**:  
+    * A & C survive due to distinguishable features. [✓] (One-liner summary)
+- **Mode Coverage Comparison for OCR GANs**:  
+    * Feature-matching maintains higher coverage and quality over vanilla baselines, improving letter recognition especially with edge sharpening letters like A, C, G. [✓] (Summary Statement)
+- **Visual Assessment of Improved Recognition Rates**:  
+    * Feature-matched models yield more recognizable and varied shapes across the alphabet spectrum compared to vanilla baselines.  [✓]

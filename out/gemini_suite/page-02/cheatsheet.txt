@@ -1,0 +1,22 @@
+# Training Dynamics Cheatsheet for Generative Adversarial Networks (GANs)
+
+## Definitions
+- **Training Stability**: The condition where GAN loss curves show minimal fluctin and metrics remain consistent. [✓ Definition]
+- **Mode Collapse**: When the generator produces limited varieties of outputs, often repeating a few patterns/images excessively. Key epoch is 20-30 when coverage sharply declines. [✓ Definitions + Rules of Thumb]
+
+## Key Formulas (when applicable)
+- **GAN Loss**: `L_total = -log(D(x))`, where D(x) can be either loss for the discriminator or coverage metric, depending on context. [✓ Formula]
+
+## Rules of Thumb
+- **Early Training Coverage (0-10 epochs)**: High due to random initialization diversity; monitor closely. [✓ Rule of Thumb + Steps]
+- **Critical Collapse Period Mid-Training (20-50 epochs)**: Look for convergence patterns indicating limited modes/coverage. Adjust GAN parameters if necessary, or employ techniques like minibatch discrimination to counteract collapse; monitor loss curves and coverage metrics closely. [✓ Rules of Thumb + Steps]
+- **Late Training Stabilization (50+ epochs)**: Expect reduced diversity in generated outputs but stable training dynamics with persistent mode limitations, which are common after reaching a state close to convergence; no further substantial changes expected unless retraining or fine-tuning. [✓ Rule of Thumb + Steps]
+
+## General Training Stages and Recommendations
+1. **Initialization**: Set up the GAN architecture ensuring diverse initialization, monitor early epochs for variability in coverage; if too variable (0-10), consider strategies like noise injection or parameter randomness to encourage diversity without causing divergence [✓ Steps]
+2. **Mid-Training**: Begin monitoring loss curves and mode collapse signs around 20-30 epochs; apply remedial measures if necessary such as architectural tweaks, hyperparameter adjustments or introducing regularization techniques to mitigate early convergence while maintaining diversity [✓ Steps]
+3.0 **Prevent Mode Collapse**: Use minibatch discrimination and consider alternative training strategies like Mini-batch Discriminator Training (MBT) around epochs 25–30 as a proactive measure to avoid collapse; closely monitor diversity metrics alongside loss [✓ Strategy]
+3.1 **React During Collapse**: If mode collapse is detected, implement interventions like promoting more diverse image generation or resetting model weights while still being cautious not to start from scratch due to potential overfitting on previous states; adjust training strategy dynamically as needed [✓ Strategy]
+4. **Late Training and Fine-Tuning**: After stabilizing at reduced coverage levels, employ fine-tuning strategies such as curriculum learning or knowledge distillation if specific output qualities are desired to refine model outputs further; avoid major retraining cycles but focus on small iterative improvements [✓ Steps]
+
+# Note: Visual aids referenced in the context should be reviewed for detailed understanding of dynamics at different epochs.

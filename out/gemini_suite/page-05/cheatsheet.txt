@@ -1,0 +1,19 @@
+**Quality Assessment for Jazz Patterns in Generative Models: Cheatsheet**
+
+- **Definitions & Key Concepts:**
+   - Quality assessment: Evaluate if patterns sound musical, specifically jazz. [c]
+     *Realistic timing* and structure are hallmarks of quality jazz output (see Fig 3).
+   
+- **Rhythmic Features to Monitor:**
+   - Syncopation levels should be prominent for authenticity in jazz rhythm generation (see sample patterns with syncopated notes [Figure not provided]).
+   - Variability is crucial; avoid monotonous repetition without variation. ✅ Ensure noticeable differences between consecutive samples within a set.
+   
+- **Annealing Strategies:**
+   - *Cyclical Annealing* (top): Gradual cooling followed by intermittent reheating to explore different patterns, potentially enhancing complexity and musicality of generated jazz rhythms ([Figure 4]).
+   - *Linear Annealing* (bottom): Steady reduction in randomness over time for controlled pattern evolution; may produce smoother transitions but risk losing the characteristic 'bite' of jazz.
+   
+- **Steps to Evaluate Quality:**
+  1. Compare generated patterns with real-world examples, focusing on rhythmic complexity and structure ([Figure 3] as reference).
+  2. Analyze for syncopation—a key jazz trait (no visual provided; referential cue to Figures not shown in this snippet): Jazz Rhythm Checker Tool or similar software can be used, inputting generated patterns to visually and audibly inspect syncopated notes' placement relative to the beat.
+  3. Examine variation between consecutive samples within a pattern set (one-line example: "Check for distinct note timings").
+  4. Evaluate annealing strategy effectiveness in capturing jazz essence; prefer cyclical strategies that yield diverse patterns with noticeable syncopation and complexity ([Figure 4]).

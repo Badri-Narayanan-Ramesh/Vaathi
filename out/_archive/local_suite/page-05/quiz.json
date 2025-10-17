@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. What does Figure 3 illustrate about generated jazz patterns?",
+    "options": [
+      "A) Lack of realistic timing and structure in drum patterns.",
+      "B) Generation of unpredictable musical sounds with no rhythmic coherence.",
+      "C) Realistic timing, structured compositions capturing syncopation and complexity characteristic of jazz music.",
+      "D) Repetitive beats devoid of variation and style specific to jazz genre."
+    ]
+  },
+  {
+    "q": "2. In Figure 4's comparison between cyclical and linear annealing strategies in drum patterns generation, which statement is true?",
+    "options": [
+      "A) Linear annealing shows significantly better results than the cyclical approach across all metrics.",
+      "B) The two approaches demonstrate no discernible differences in their outcomes on generated jazz drum patterns.",
+      "C) Both strategies have distinct advantages and disadvantages that can be seen when evaluating rhythmic complexity, syncopation, etc.",
+      "D) Cyclical annealing always fails to capture the complex traits of jazz music as compared to linear approaches."
+    ]
+  },
+  {
+    "q": "3. According to Figure 5's interpretation data about generated patterns assessment for musicality:",
+    "options": [
+      "A) The majority find that drum patterns sound dissonant and unmusical despite rhythmic coherence.",
+      "B) Patterns consistently show strong realism in timing, structure, but are criticized for lack of variation.",
+      "C) There's a general consensus on the musicality of generated jazz patterns based on captured traits like syncopation.",
+      "D) The interpretation data is inconclusive with no clear assessment about pattern\u2019s sound or music quality provided."
+    ],
+    "answers": "Answers: 1-C, 2-C, 3-C"
+  }
+]

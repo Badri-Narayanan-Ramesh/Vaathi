@@ -1,0 +1,5 @@
+• The feature-matching GAN model outperforms vanilla GAN in terms of letter diversity.
+
+• Quantitative analysis reveals that without fixes, vanilla GAN's mode coverage drops to ~0.6-0.7; however, with the fix applied, it maintains ~0.7-0.8 coverage while still missing some letters like O due to their smoother shapes.
+
+• Improvement in letter shape recognizability is evident through visual assessment when using feature-matching GAN models over vanilla baselines.

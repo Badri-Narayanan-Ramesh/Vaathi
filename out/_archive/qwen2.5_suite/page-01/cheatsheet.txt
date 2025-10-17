@@ -1,0 +1,14 @@
+**CHEAT SHEET**
+
+**Problem 1 Analysis:**
+- **Letters like A, C, G survive mode collapse due to sharper edges.**
+- **X, Y, Z appear but less, indicating partial collapse.**
+- **Feature-matching model handles smoother letters (O) better overall.**
+- **Quantitative Comparison:**
+  - **Feature-matching GAN** shows improved letter diversity compared to vanilla GAN.
+  - **Coverage**: ~0.7-0.8 for feature-matching vs ~0.6-0.7 for vanilla GAN.
+  - **Visual Quality**: Feature-matching produces more recognizable shapes.
+
+**Figure References:**
+- [Figure 1] Describes mode collapse specifics.
+- [Figure 2] Visualizes the quantitative comparison results.

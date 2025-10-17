@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is cyclical annealing in machine learning?",
+    "a": "Cyclical annealing alternates between two extreme temperatures, providing periodic breaks from the KL constraint and sustaining diversity."
+  },
+  {
+    "q": "How does linear annealing differ from cyclical annealing?",
+    "a": "Linear annealing increases monotonically from 0 to 1, often causing premature collapse and repetitive patterns."
+  },
+  {
+    "q": "What is the key benefit of using cyclical annealing compared to linear annealing?",
+    "a": "Cyclical annealing maintains 2\u20133\u00d7 higher pattern diversity and more musically coherent outputs."
+  },
+  {
+    "q": "How does the KL constraint impact annealing schedules in machine learning?",
+    "a": "The KL constraint restricts the model's ability to explore its full capacity, which cyclical annealing helps mitigate by providing periodic breaks from it."
+  },
+  {
+    "q": "What is the primary goal of annealing schedules in machine learning?",
+    "a": "To balance exploration and exploitation by gradually increasing the temperature or difficulty of the task, allowing the model to converge more effectively."
+  }
+]

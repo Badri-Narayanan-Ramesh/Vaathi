@@ -1,0 +1,22 @@
+[
+  {
+    "q": "Why do certain letters like A, C, and G survive mode collapse while others like Q, X, Z disappear?",
+    "a": "Letters such as A, C, and G tend to survive because their sharper edges make them easier for the model to learn. In contrast, smoother-shape letters like O are more likely to be missed by both vanilla and feature-matching models."
+  },
+  {
+    "q": "How does feature-matching handle mode collapse compared to a vanilla GAN?",
+    "a": "The feature-matching GAN handles mode collapse better overall but still misses some letters with smoother shapes like the letter O. Both the vanilla GAN and feature-matching model have issues with mode collapse, leading to lower coverage of certain letters."
+  },
+  {
+    "q": "What is the quantitative comparison of mode coverage between a feature-matched GAN and a vanilla GAN?",
+    "a": "The feature-matched GAN shows improved letter diversity compared to the vanilla GAN baseline. While the vanilla GAN's coverage drops to around 0.6-0.7, the feature-matching model maintains coverage at about 0.7-0.8. This indicates that the feature-matching approach produces more recognizable letter shapes."
+  },
+  {
+    "q": "What is the visual quality assessment result for the feature-matched GAN?",
+    "a": "The visual quality assessment of the feature-matched GAN shows it producing more recognizable letter shapes compared to the vanilla GAN baseline."
+  },
+  {
+    "q": "How does mode collapse affect the coverage of different types of letters in the model's output?",
+    "a": "Mode collapse leads to a significant drop in coverage for certain smoother-shape letters, such as O. Both vanilla and feature-matching models struggle with these less distinctively shaped letters, resulting in reduced coverage even when using more sophisticated techniques like feature matching."
+  }
+]

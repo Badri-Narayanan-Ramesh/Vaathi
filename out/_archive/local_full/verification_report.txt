@@ -1,0 +1,7 @@
+Page 1: coverage=0.92 matched_keywords=['letters', 'feature-matching', 'like', 'coverage', 'gan', 'mode', 'collapse', 'more', 'still', 'model', 'shapes']
+Page 2: coverage=0.42 matched_keywords=['coverage', 'training', 'collapse', 'when', 'mode']
+Page 3: coverage=0.50 matched_keywords=['figure', 'stabilization', 'technique', 'rec', 'effectiveness', 'feature-matching']
+Page 4: coverage=0.75 matched_keywords=['latent', 'figure', 'control', 'instrument', 'posterior', 'collapse', 'annealing', 'complexity', 'humanization']
+Page 5: coverage=0.17 matched_keywords=['generated', 'patterns']
+Page 6: coverage=0.75 matched_keywords=['annealing', 'cyclical', 'diversity', 'comparison', 'alternates', 'between', 'periodic', 'breaks', 'constraint']
+Page 7: coverage=0.75 matched_keywords=['style', 'transfer', 'success', 'rhythm', 'samples', 'rhythmic', 'rate', 'shows', 'electronic']

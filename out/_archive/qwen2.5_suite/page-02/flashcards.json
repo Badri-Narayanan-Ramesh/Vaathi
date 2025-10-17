@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is meant by \"training stability\" in the context of generative models?",
+    "a": "Training stability refers to the condition where the model's loss curves and coverage metrics show minimal fluctuation, indicating a consistent learning process."
+  },
+  {
+    "q": "When does mode collapse typically become evident?",
+    "a": "Mode collapse becomes evident around epoch 20-30, corresponding to the sharp decline in coverage metrics observed during mid-training."
+  },
+  {
+    "q": "What is the difference between early and mid-training phases in terms of model behavior?",
+    "a": "In early training, the model shows high apparent coverage due to initial random initialization diversity. During mid-training, the model experiences a collapse period where it converges to limited modes, highlighting the critical transition phase for understanding generative models' dynamics."
+  },
+  {
+    "q": "How does late training affect model behavior compared to mid-training?",
+    "a": "In late training, the model stabilizes at reduced coverage levels with persistent mode limitations. This stabilization indicates that although initial phase issues have been addressed, ongoing challenges remain in maintaining consistent and diverse output distributions."
+  },
+  {
+    "q": "Why is it important to understand the transition periods in model training?",
+    "a": "Understanding these transition periods, such as early, mid-training, and late stages, helps identify potential issues like mode collapse. This knowledge enables developers to better manage these phases, potentially improving overall model performance and robustness."
+  }
+]

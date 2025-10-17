@@ -1,0 +1,9 @@
+Bullets:
+- Cyclical annealing provides periodic breaks from the KL constraint.
+- Linear annealing causes a monotonic increase in constraints, potentially leading to premature collapse and repetitive patterns.
+- Pattern diversity is generally higher with cyclical annealing methods compared to linear ones.
+- Outputs produced through cyclical annealing tend to be more musically coherent than those from other techniques. 
+- Cycling between constraints helps in sustaining a wider variety of patterns during the generation process.
+
+Summary:
+Cyclical and linear annealing are two approaches used for constraint management, with cyclical being superior due to its ability to maintain high pattern diversity while producing more musically coherent outputs without leading to premature collapse as often seen in monotonic linear methods.

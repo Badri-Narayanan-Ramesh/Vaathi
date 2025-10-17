@@ -1,0 +1,8 @@
+- Letters like A, C, and G are more likely to appear because their sharp edges make them easier for the model to recognize.
+- Letters such as X, Y, and Z have some presence in the output, indicating the model didn't completely ignore them despite mode collapse.
+- Using a feature-matching model helps maintain diversity with letters like O that have smoother shapes.
+- In comparison tests, a feature-matching GAN produced more recognizable letter shapes compared to a vanilla GAN.
+- The vanilla GAN’s coverage dropped to around 0.6-0.7 while the feature-matching version maintained at about 0.7-0.8.
+
+Summary:
+The key finding is that using a feature-matching model helps keep letters with smoother shapes like O in the output, resulting in better overall letter diversity and visual quality.

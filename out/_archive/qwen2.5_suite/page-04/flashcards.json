@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What prevented posterior collapse in the model?",
+    "a": "KL annealing and free bits prevented posterior collapse, as shown by nonzero KL and diverse outputs (see Figure 1)."
+  },
+  {
+    "q": "How can latent dimensions be interpreted in terms of their control over generated patterns?",
+    "a": "Sweeping a single latent dimension alters pattern density and instrument activation (see Figure 2). Each latent controls a distinct musical property, such as density, timing, or instrument usage. Humanization experiment shows subtle changes in these properties from latent noise."
+  },
+  {
+    "q": "What is the relationship between posterior collapse and model behavior when collapsed?",
+    "a": "If the model had collapsed, all patterns would look identical regardless of latent input (see Figure 2)."
+  },
+  {
+    "q": "How do latent dimensions affect generated outputs according to the humanization experiments?",
+    "a": "Humanization experiment shows subtle changes in timing and instrument usage from latent noise."
+  },
+  {
+    "q": "What is the basis for interpreting different latent dimensions' control over musical properties?",
+    "a": "Sweeping a single latent dimension alters pattern density and instrument activation (see Figure 2). Each latent controls a distinct property, such as density, timing, or instrument usage."
+  }
+]

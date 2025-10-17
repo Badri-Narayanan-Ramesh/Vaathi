@@ -1,0 +1,6 @@
+[
+  {
+    "q": "RAW",
+    "a": "Q1: What is posterior collapse in the context of generative models?\nA1: Posterior collapse occurs when certain model parameters stop updating, often leading to lack of diversity.\n\nQ2: How does KL annealing combined with free bits prevent posterior collapse?\nA2: They maintain a balance between regularization and sparsity in the output distribution.\n\nQ3: What observable changes indicate that latent variation experiments control certain aspects of generated patterns?\nA3: Changes include alterations in pattern density, instrument activation, timing subtleties influenced by instruments like piano or marimba, as well as dynamic variations such as crescendo and decrescendo effects.\n\nQ4: What would be a symptomatic outcome if the generative model collapses?\nA4: All generated patterns look identical regardless of different latent inputs provided to the model."
+  }
+]

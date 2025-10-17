@@ -1,0 +1,32 @@
+[
+  {
+    "q": "1. According to Figure 4, what improvements does feature-matching stabilization demonstrate?",
+    "options": [
+      "A) Decreased visual quality in images but improved metric consistency",
+      "B) Measurable improvements in both metrics and visual quality with fewer oscillations during training",
+      "C) Reduced artifacts only without affecting the recognition of letters or image stability",
+      "D) Improved letter recognition, reduced artifacts, increased overall noise within generated samples"
+    ],
+    "answers": "Answers: B-2, C-3, D-4"
+  },
+  {
+    "q": "2. How does feature-matching stabilization prevent discriminator overpowering?",
+    "options": [
+      "A) By using a different algorithm altogether for training the model",
+      "B) Through matching intermediate output distributions of both networks to maintain balance",
+      "C) It doesn't; it just prevents oscillation in generated images",
+      "D) The technique uses external data normalization methods exclusively"
+    ],
+    "answers": "Answers: B-2, C-3"
+  },
+  {
+    "q": "3. What does Figure 5 indicate about the convergence behavior when using feature-matching stabilization during training?",
+    "options": [
+      "A) There are more frequent overpowering occurrences by discriminators than in baseline models",
+      "B) Convergence is unstable with increased oscillations seen often in vanilla approaches",
+      "C) Feature-matching leads to a stable convergence pattern with reduced and less erratic oscillation patterns observed",
+      "D) The training process becomes slower, leading to more extended periods of overpowering by the discriminator"
+    ],
+    "answers": "Answers: C-3, B-1, D-4"
+  }
+]

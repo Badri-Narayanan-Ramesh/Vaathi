@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What does Feature-matching stabilization prevent?",
+    "a": "Discriminator overpowering by matching intermediate feature distributions."
+  },
+  {
+    "q": "How does Feature-matching stabilization improve OCR performance?",
+    "a": "It improves letter recognition and reduces artifacts compared to vanilla baseline."
+  },
+  {
+    "q": "What is the effect of Feature-matching stabilization on training curves?",
+    "a": "They exhibit more stable convergence with reduced oscillation patterns."
+  },
+  {
+    "q": "What metric shows measurable improvements in both metrics and visual quality for Feature-matching stabilization?",
+    "a": "Visual quality (as shown in Figure 4)."
+  },
+  {
+    "q": "Why does training convergence stabilize with Feature-matching stabilization?",
+    "a": "It prevents overfitting by matching feature distributions, resulting in more stable convergence."
+  }
+]

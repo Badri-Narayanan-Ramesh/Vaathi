@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is cyclical annealing?",
+    "a": "A process used to generate drum patterns, where temperature changes follow a repetitive cycle."
+  },
+  {
+    "q": "What are some characteristics of jazz-specific rhythms?",
+    "a": "Syncopation, complexity, and rhythmically coherent variations with noticeable differences."
+  },
+  {
+    "q": "How do different annealing strategies compare in generated drum patterns?",
+    "a": "Cyclical annealing produces more realistic results, while linear annealing shows less coherence."
+  },
+  {
+    "q": "What is the primary goal of quality assessment in pattern generation?",
+    "a": "To determine whether the generated patterns sound musical and meet certain aesthetic criteria."
+  },
+  {
+    "q": "What is syncopation in music?",
+    "a": "A rhythmic phenomenon where a note or beat falls outside the normal strong-weak rhythm, creating a sense of tension or surprise."
+  }
+]

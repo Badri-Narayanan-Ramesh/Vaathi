@@ -1,0 +1,7 @@
+- Oscillation in loss curves is minimized, indicating enhanced training stability.
+- Mode collapse becomes noticeable around epoch 20-30 as coverage sharply declines.
+- High apparent coverage observed early on due to diversity from random initialization of generator.
+- Mid-training (epochs 20-50) marks a critical period with convergence towards limited modes, indicating collapse onset.
+- Late training beyond epoch 50 shows stabilization at lowered coverage levels but continues to have mode limitations.
+
+Summary: The study reveals that while initial generator diversity from random initialization provides high apparent coverage in early stages of GANs (Generative Adversarial Networks), a critical collapse period occurs around mid-training as the model converges on limited modes, resulting in reduced overall stability and persistent undercoverage.

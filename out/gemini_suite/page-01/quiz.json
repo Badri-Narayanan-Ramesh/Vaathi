@@ -1,0 +1,29 @@
+[
+  {
+    "q": "1) According to Vivin Thiyagarajan, why do certain letters like A, C, and G appear more frequently in mode collapse?",
+    "options": [
+      "A) Because they are easier for humans to read.",
+      "B) Due to their sharper edges making them simpler to learn with the feature-matching model.",
+      "C) They have a higher point value on standardized tests.",
+      "D) The letters vanish less often due to being part of common words like 'and' and 'the'."
+    ],
+    "answers": "Answers: 1) B, 2) D, 3) A"
+  },
+  {
+    "q": "2) What does the quantitative comparison in Figure 1 reveal about letter coverage between Feature-matching GAN and vanilla GAN?",
+    "options": [
+      "A) The feature-matching model has significantly lower letter diversity.",
+      "B) Both models have improved their performance equally over time.",
+      "C) Vanilla GAN maintains better overall mode coverage with minor drop in letters like X, Y, Z.",
+      "D) Feature-matching GAN shows more recognizable and diverse shapes of the generated characters while vanilla GAN's letter diversity drops to ~0.6-0.7 from 1.0 baseline. Answers: 2) D, 3) C, 4) A"
+    ]
+  },
+  {
+    "q": "3) What aspect does Vivin Thiyagarajan suggest is not fully addressed by the models in terms of character generation?",
+    "options": [
+      "A) Generating letters with smoother shapes like O are still challenging for these models.",
+      "B) The model can perfectly generate all letter types without any issues.",
+      "C) It's impossible to distinguish between similar looking characters such as I and J using this method. D) All of the above Answers: 3) A"
+    ]
+  }
+]

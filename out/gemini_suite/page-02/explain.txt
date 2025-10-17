@@ -1,0 +1,9 @@
+Bullet 1 - Training stability becomes better when there are fewer ups and downs in loss curves. This is like a roller coaster needing to be smooth for the ride, rather than wild jolts back and forth.
+
+- Bullet 2 - Generator collapse usually starts between epoch 20 and 30 as you can see from when coverage drops sharply (like suddenly losing parts of your car's engine power).
+
+- Bullet 3 - Early training stages seem good initially since the random start gives a lot of diversity, like different characters in an improv show.
+
+- Bullet 4 - In the middle phase between epochs 20 to 50 is where things go wrong; it's when our generator starts losing its ability to produce varied results and gets stuck repeating similar ones (like only playing one song on repeat).
+
+- Summary: During training, a model goes through phases of high diversity but then falls into repetition. Understanding these stages helps in fixing the collapse so we can maintain variety throughout the process.

@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is Feature-matching stabilization in the context of image generation?",
+    "a": "Feature-matching stabilization is an image processing technique that prevents the discriminator from overpowering by ensuring intermediate feature distributions match, leading to improved metrics and visual quality."
+  },
+  {
+    "q": "How does Feature-matching stabilization affect training curves compared to a vanilla baseline?",
+    "a": "Training curves for Feature-matching stabilization exhibit more stable convergence with reduced oscillation patterns, unlike those of a vanilla baseline which may show more instability and oscillations."
+  },
+  {
+    "q": "What improvements can be observed in generated samples using Feature-matching stabilization?",
+    "a": "Generated samples using Feature-matching stabilization demonstrate better letter recognition and fewer artifacts compared to the baseline method."
+  },
+  {
+    "q": "Why does Feature-matching stabilization prevent discriminator overpowering?",
+    "a": "It prevents discriminator overpowering by matching intermediate feature distributions, ensuring a more balanced and effective training process."
+  },
+  {
+    "q": "What specific improvements can be seen in evaluation metrics for Feature-matching stabilization as mentioned in Figure 4?",
+    "a": "The figure shows measurable improvements in both metrics and visual quality due to the application of Feature-matching stabilization."
+  }
+]

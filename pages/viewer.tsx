@@ -1,17 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AppShell, Container, Group, Title, Text, Button, Stack, Card, ScrollArea, Textarea, ActionIcon, Grid, Divider, Badge } from "@mantine/core";
+import { AppShell, Container, Group, Title, Text, Button, Stack, Card, ScrollArea, Textarea, ActionIcon, Grid, Divider, Badge, Loader } from "@mantine/core";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { IconSend, IconChevronLeft, IconChevronRight, IconFileText, IconLink } from "@tabler/icons-react";
+import { explainPage, askQuestion, listPages } from "../lib/api";
 
 const PdfSlides = dynamic(() => import("../components/PdfSlides"), { ssr: false });
-const fileUrl = "C:\Users\nithi\Downloads\dudummy.pdf";
-type ChatMsg = { role: "user" | "assistant"; text: string };
+
+type ChatMsg = { role: "user" | "assistant"; text: string; loading?: boolean };
 
 export default function Viewer() {
   const router = useRouter();
   const [url, setUrl] = useState<string | null>(null);
   const [name, setName] = useState<string>("Untitled");
+  const [docId, setDocId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -19,26 +21,180 @@ export default function Viewer() {
 
   const [draft, setDraft] = useState("");
   const [chat, setChat] = useState<ChatMsg[]>([
-    { role: "assistant", text: "Ask about any slide, I’ll explain or cross-reference notes & refs." },
+    { role: "assistant", text: "Ask about any slide, I'll explain or cross-reference notes & refs." },
   ]);
+  
+  const [loadingExplanation, setLoadingExplanation] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const storedUrl = localStorage.getItem("pptUrl");
-    const storedName = localStorage.getItem("pptName");
-    if (storedName) setName(storedName);
-    if (storedUrl) setUrl(storedUrl);
-    setReady(true);
+    const init = async () => {
+      const storedUrl = localStorage.getItem("pptUrl");
+      const storedName = localStorage.getItem("pptName");
+      const storedDocId = localStorage.getItem("docId");
+      const storedPageCount = localStorage.getItem("pageCount");
+
+      if (storedName) setName(storedName);
+      if (storedUrl) setUrl(storedUrl);
+      if (storedDocId) setDocId(storedDocId);
+      if (storedPageCount) setNumPages(parseInt(storedPageCount, 10));
+
+      // Preflight: verify doc exists on backend; if missing, clear stale state but don't redirect
+      if (storedDocId) {
+        try {
+          await listPages(storedDocId);
+        } catch (e) {
+          // Clear stale session; viewer will show "No file loaded" with a button
+          localStorage.removeItem('docId');
+          localStorage.removeItem('pptUrl');
+          localStorage.removeItem('pptName');
+          localStorage.removeItem('pageCount');
+          setDocId(null);
+          setUrl(null);
+          setNumPages(1);
+          setName('Untitled');
+        }
+      }
+
+      setReady(true);
+    };
+    init();
   }, []);
 
-  const onSend = () => {
+  // Auto-fetch explanation when page changes
+  useEffect(() => {
+    if (!docId || !ready) return;
+    
+    const fetchExplanation = async () => {
+      setLoadingExplanation(true);
+      try {
+        const result = await explainPage(docId, page - 1); // 0-indexed in backend
+        
+        // Add explanation as assistant message
+        setChat(prev => [
+          ...prev,
+          { 
+            role: "assistant", 
+            text: `📄 **Slide ${page} Summary:**\n\n${result.explanation}` 
+          }
+        ]);
+        
+        console.log('✅ Explanation loaded for page', page);
+      } catch (error: any) {
+        console.error('❌ Failed to load explanation:', error);
+        const msg = String(error?.message || error);
+        // If the backend restarted, in-memory doc store is cleared -> doc not found
+        if (msg.includes('Document not found') || msg.includes('404')) {
+          setChat(prev => [
+            ...prev,
+            {
+              role: 'assistant',
+              text: `⚠️ This session expired or the server restarted, so the document isn't available anymore. Please re-upload your file.`,
+            },
+          ]);
+          try {
+            localStorage.removeItem('docId');
+            localStorage.removeItem('pptUrl');
+            localStorage.removeItem('pptName');
+            localStorage.removeItem('pageCount');
+          } catch {}
+          setDocId(null);
+          setUrl(null);
+          setNumPages(1);
+          setName('Untitled');
+        } else {
+          setChat(prev => [
+            ...prev,
+            { 
+              role: "assistant", 
+              text: `⚠️ Could not load explanation for slide ${page}. Error: ${msg}` 
+            }
+          ]);
+        }
+      } finally {
+        setLoadingExplanation(false);
+      }
+    };
+
+    fetchExplanation();
+  }, [page, docId, ready]);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
+  }, [chat]);
+
+  const onSend = async () => {
     const trimmed = draft.trim();
-    if (!trimmed) return;
-    setChat((c) => [...c, { role: "user", text: trimmed }, { role: "assistant", text: "…(placeholder reply)" }]);
+    if (!trimmed || !docId) return;
+
+    // Add user message
+    setChat(prev => [...prev, { role: "user", text: trimmed }]);
     setDraft("");
+
+    // Add loading message
+    setChat(prev => [...prev, { role: "assistant", text: "Thinking...", loading: true }]);
+
+    try {
+      // Call backend Q&A
+      const result = await askQuestion(docId, trimmed, 3);
+      
+      // Replace loading message with actual answer
+      setChat(prev => {
+        const newChat = [...prev];
+        newChat[newChat.length - 1] = { 
+          role: "assistant", 
+          text: result.answer,
+          loading: false
+        };
+        return newChat;
+      });
+      
+      console.log('✅ Answer received');
+    } catch (error: any) {
+      console.error('❌ Q&A failed:', error);
+      const msg = String(error?.message || error);
+
+      // If doc isn't found (e.g., server restarted), clear session and redirect
+      if (msg.includes('Document not found') || msg.includes('404')) {
+        setChat(prev => {
+          const newChat = [...prev];
+          newChat[newChat.length - 1] = {
+            role: 'assistant',
+            text: `⚠️ This session expired or the server restarted. Please re-upload your file to continue.`,
+            loading: false,
+          };
+          return newChat;
+        });
+        try {
+          localStorage.removeItem('docId');
+          localStorage.removeItem('pptUrl');
+          localStorage.removeItem('pptName');
+          localStorage.removeItem('pageCount');
+        } catch {}
+        setDocId(null);
+        setUrl(null);
+        setNumPages(1);
+        setName('Untitled');
+      } else {
+        // Replace loading message with error
+        setChat(prev => {
+          const newChat = [...prev];
+          newChat[newChat.length - 1] = { 
+            role: "assistant", 
+            text: `⚠️ Sorry, I couldn't answer that. Error: ${msg}`,
+            loading: false
+          };
+          return newChat;
+        });
+      }
+    }
   };
 
   const pageButtons = useMemo(() => {
-    const arr = [];
+    const arr: number[] = [];
     for (let i = 1; i <= numPages; i++) arr.push(i);
     return arr;
   }, [numPages]);

@@ -1,0 +1,6 @@
+[
+  {
+    "q": "RAW",
+    "a": "Q1: What characteristics do generated jazz patterns exhibit?\nA1: Realistic timing, structure, syncopation, complexity.\n\nQ2: How does rhythmic coherence vary in generated drum patterns within a single sample according to the text provided?\nA2: With noticeable variation while remaining rhythmically coherent overall.\n\nQ3: What two annealing strategies are compared in Figure 4 and what aspect of jazz they aimed to capture differently?\nA3: Cyclical versus linear; cyclical likely emphasizes a repetitive loop, whereas linear may progress steadily without returning cycles.\n\nQ4: Why is understanding the quality assessment important for generated patterns meant to sound musical according to RAW context?\nA4: It ensures that jazz-specific traits like syncopation and complexity are captured in rhythms which contribute to a realistic music perception of jazz style.\n\nQ5: How do variations within the same sample affect its overall interpretation as described in the text provided?\nA5: Variations add interest and authenticity, reflecting natural human performances without detracting from the coherent structure typical for drum patterns in that genre."
+  }
+]
