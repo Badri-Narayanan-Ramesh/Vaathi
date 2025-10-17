@@ -1,0 +1,34 @@
+Here is a concise cheatsheet based on the provided context:
+
+**Definitions**
+
+• Mode collapse: When the model fails to generate diverse outputs due to limited training data.
+• Feature-matching GAN (FM-GAN): A variant of GAN that uses feature matching loss for better letter diversity.
+
+**Key Formulas**
+
+• Feature matching loss: L = ∑(f(x) - f(y))^2, where f(x) and f(y) are feature representations.
+
+• Vanilla GAN loss: D(x) - 1 + log(P(x)), where D is the discriminator and P(x) is the probability distribution.
+
+**Rules of Thumb**
+
+• Sharper edges → Easier to learn → More frequent appearance.
+• Smoother shapes → Harder to learn → Less frequent appearance.
+
+**Steps for Feature-Matching GAN**
+
+• Train discriminator on letter features
+• Train generator on feature-matching loss
+• Use feature matching loss to encourage diversity
+
+**Quantitative Comparison**
+
+• Vanilla GAN: ~0.6-0.7 coverage
+• FM-GAN: ~0.7-0.8 coverage (improved letter diversity)
+
+**Visual Quality Assessment**
+
+• FM-GAN produces more recognizable letter shapes.
+
+Note: The cheatsheet is designed to be concise and easy to revise quickly, using one-line bullets and key definitions, formulas, rules of thumb, and steps for the feature-matching GAN.

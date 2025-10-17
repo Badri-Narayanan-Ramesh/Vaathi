@@ -1,0 +1,24 @@
+[
+  {
+    "q": "1) Why do certain letters like A, C, and G survive mode collapse while others like Q, X, and Z do not?",
+    "options": [
+      "A) Because A, C, and G have sharper edges that make them easier to learn.",
+      "B) Because they appear more often in the dataset being used for training."
+    ]
+  },
+  {
+    "q": "2) How does feature-matching compare to vanilla GAN in terms of letter diversity after a fix is applied?",
+    "options": [
+      "A) It shows improved letter diversity compared to the vanilla GAN baseline.",
+      "B) It maintains the same level of letter diversity as the vanilla GAN."
+    ]
+  },
+  {
+    "q": "3) What conclusion can be drawn from visual quality assessment results regarding feature-matching\u2019s performance on letter shapes?",
+    "options": [
+      "A) Feature-matching produces more recognizable letter shapes compared to vanilla GAN.",
+      "B) Feature-matching fails to produce any recognizable letter shapes."
+    ],
+    "answers": "Answers: 1) A, 2) A, 3) A"
+  }
+]

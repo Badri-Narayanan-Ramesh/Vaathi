@@ -1,0 +1,7 @@
+Cyclical annealing alternates between two states, much like a seesaw going up and down. This creates regular pauses in work to avoid sticking too rigidly to one pattern or structure—imagine trying not to repeat the same dance step all the time during practice sessions for better performance on stage.
+
+- In cyclical annealing, we switch between two different conditions (like a seesaw). 
+- This helps us take breaks from always doing things in the same way and keeps our results varied—think of it as ensuring not to keep singing only one note when you should be hitting notes across your vocal range.
+- Cyclical annealing maintains about two to three times more diverse patterns than its linear counterpart, making creations feel smoother in output (similar to how a well-paced melody flows better and feels right).
+- However, continuous monotonic progression often leads us down the same path repeatedly—imagine walking along without turning corners or exploring different routes.
+- Overall, this approach keeps things fresh by avoiding early collapse into simple repetitions (think of it as preventing a melody from becoming just one looped chorus).

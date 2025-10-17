@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is the difference between cyclical annealing and linear annealing in terms of their approach?",
+    "a": "Cyclical annealing alternates between two states, while linear annealing increases progressively."
+  },
+  {
+    "q": "How does cyclical annealing maintain pattern diversity compared to linear annealing?",
+    "a": "Cyclical annealing keeps the system oscillating and thus sustains high-level of pattern diversity; in contrast, linear annealing often leads to repetitive patterns due to monotonic progression."
+  },
+  {
+    "q": "What are two states that cyclical annealing alternates between?",
+    "a": "Cyclical annealing switches back and forth between 0 (off or no constraint) and 1 (on or KL-constraint)."
+  },
+  {
+    "q": "Why is linear annealing considered to cause premature collapse in some cases?",
+    "a": "Due to its monotonic increase, it can quickly become overly constrained without maintaining the necessary diversity for continuous creativity."
+  },
+  {
+    "q": "In what context did cyclical annealing outperform other forms of AI learning algorithms according to the raw text provided?",
+    "a": "Cyclical annealing showed superior performance in generating more musically coherent outputs while also maintaining high pattern diversity compared to linear and evolutionary approaches."
+  }
+]

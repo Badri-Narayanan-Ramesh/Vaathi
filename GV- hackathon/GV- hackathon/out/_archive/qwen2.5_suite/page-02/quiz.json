@@ -1,0 +1,19 @@
+[
+  {
+    "options": [
+      "A) Early epochs (0-10)",
+      "B) Mid-training (20-50)",
+      "C) Late training (50+)",
+      "D) Epochs around 20-30",
+      "A) Early epochs (0-10)",
+      "B) Mid-training (20-50)",
+      "C) Late training (50+)",
+      "D) Epochs around 20-30",
+      "A) Coverage levels increase significantly",
+      "B) Generator converges to limited modes",
+      "C) Random initialization diversity is most apparent",
+      "D) Mode collapse becomes evident"
+    ],
+    "answers": "Answers: 1) B, 2) A, 3) D"
+  }
+]

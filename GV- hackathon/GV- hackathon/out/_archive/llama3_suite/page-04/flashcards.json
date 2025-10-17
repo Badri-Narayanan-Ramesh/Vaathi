@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is posterior collapse in the context of KL annealing?",
+    "a": "Collapse of the model's output patterns into identical configurations, prevented by KL annealing and free bits."
+  },
+  {
+    "q": "How does latent variation experimentation show changes in generated patterns?",
+    "a": "Experiments demonstrate clear changes in pattern density, instrument activation, and subtle timing changes, indicating distinct control over musical properties."
+  },
+  {
+    "q": "What is the effect of sweeping a single latent dimension on pattern generation?",
+    "a": "Sweeping alters pattern density and instrument activation, revealing that each latent dimension controls a distinct musical property."
+  },
+  {
+    "q": "What does the humanization experiment reveal about latent noise?",
+    "a": "The experiment shows subtle timing and instrument changes from latent noise, indicating that each latent dimension has a unique influence on the generated patterns."
+  },
+  {
+    "q": "Why is KL annealing effective in preventing posterior collapse?",
+    "a": "KL annealing prevents collapse by introducing non-zero KL divergence and diverse outputs, allowing the model to explore a more varied solution space."
+  }
+]

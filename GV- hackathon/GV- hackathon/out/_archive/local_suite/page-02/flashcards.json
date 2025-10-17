@@ -1,0 +1,18 @@
+[
+  {
+    "q": "At what point in training does the model'ner demonstrate improved stability?",
+    "a": "Training stability is significantly improved when there is less oscillation observed in loss curves and coverage metrics. This typically happens after epochs where instability or mode collapse might have been a concern, but no specific timeframe from the context alone can determine this exact point. Improved training dynamics often require careful monitoring of these graphs throughout different phases of model training to identify when stability is enhanced beyond early random initialization diversity."
+  },
+  {
+    "q": "During which epochs does mode collapse become evident?",
+    "a": "Mode collapse becomes evident around epoch 20-30, as indicated by a sharp decline in coverage metrics within the provided data visualization (Figure 3). This suggests that during these mid-training epochs, the model's generator is converging to limited modes of output rather than exploring diverse solutions."
+  },
+  {
+    "q": "What characterizes the initial training phase regarding coverage?",
+    "a": "During early epochs (0-10), high apparent coverage can be observed due to the diversity in starting conditions from random initialization, which often leads to varied and broadly representing results during this period of model learning before convergence issues arise."
+  },
+  {
+    "q": "What does late training reveal about mode limitation?",
+    "a": "Late training (50+ epochs) shows that there is stabilization at reduced coverage levels with persistent limitations in the modes covered by the generator, indicating a plateau or even possible further decline from where initial broad diversity was seen. This suggests an overfitting to certain limited outputs and underscores issues related to mode collapse if not properly addressed post-training phase adjustments are made."
+  }
+]

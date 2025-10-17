@@ -1,0 +1,18 @@
+## Cheatsheet on Annealing Techniques in Generative Music Algorithms
+
+**Definitions and Key Concepts:**
+
+- **Cyclical Annealing (CA):** Alternates constraint application between periods to maintain diversity. [Definition & Benefit] Maintains 2–3× higher pattern diversity, produces musically coherent outputs; alternates KL constraint with breaks for variety preservation.
+- **Linear Annealing (LA):** Steps monotonically towards final objective without resetting constraints. [Formula: \(x_{t+1} = x_t + \alpha(1 - x_t)\)] Often leads to premature collapse and repetitive patterns, less diversity preservation; may result in musically disjointed outputs or homogeneity within the generated piece if misapplied.
+
+**Key Formulas:**
+
+- **Cyclical Annealing (CA): No specific formula but follows a pattern of alternating constraint application and relaxation over iterations [Rule of Thumb] Avoid monotonic increase; ensure variability to preserve musical coherence through periodic breaks from the KL constraint.
+- **Linear Annealing:** Typically no explicit annealing schedule for music generation, as it does not inherently support diversity preservation in generative processes [Formula & Rule of Thumb] Avoid without additional measures like mutation or restarting; may lead to less diverse outputs unless supplemented with other techniques.
+
+**Steps:**
+1. Initialize the annealing process and select a suitable method (CA, LA).
+2. For CA: [Step 1a] Apply KL constraint at designated intervals while allowing for periods of relaxation without constraints; monitor pattern diversity to ensure sustained variety in outputs throughout iterations. Adjust interval frequency based on desired output variance levels.
+3. For LA: Monitor the progression closely, as it lacks inherent mechanisms to promote musical coherence and may require supplementary techniques for achieving diverse yet harmonious results; employ additional steps like random mutations or diversity-promoting callbacks if necessary. [Step 1b]
+4. Evaluate the output against desired criteria (diversity, musicianship) post each iteration cycle to make adjustments in real time and iteratively refine annealing parameters for optimal results.
+5. Iterate until reaching termination conditions or achieving a satisfactory level of musical quality within outputs; document iterations' effects on diversity preservation and output coherence, providing insights into the efficacy of chosen method(s) over various parameter settings.

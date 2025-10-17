@@ -1,0 +1,32 @@
+[
+  {
+    "q": "1. What is the trend in training stability as observed from epochs 0-50?",
+    "options": [
+      "A) It consistently improves throughout the epochs without oscillation.",
+      "B) Stability initially increases but begins to show less improvement and more oscillation around epoch 20, leading into a critical collapse period where generator converges on limited modes between epochs 20-50.",
+      "C) Collapse occurs immediately after initial training with minimal coverage throughout the remaining epochs.",
+      "D) Stability is unaffected by loss curves or mode convergence in this range of epochs."
+    ],
+    "answers": "Answers: B"
+  },
+  {
+    "q": "2. Around which epochs does the onset of collapse become evident?",
+    "options": [
+      "A) 0-10",
+      "B) 20-30",
+      "C) 40-50",
+      "D) After 60"
+    ],
+    "answers": "Answers: B"
+  },
+  {
+    "q": "3. What characterizes early epochs (0-1 endpoints and diversity)?",
+    "options": [
+      "A) Consistently low coverage due to random initialization with no apparent convergence in generator modes.",
+      "B) High apparent coverage initially, attributed to the diverse range of outputs from initial training that creates a facade of successful learning despite not being indicative of true stability or improvement.",
+      "C) Collapse is already occurring during this period as indicated by declining loss metrics and lack of diversity in generator output modes.",
+      "D) Steady coverage levels with clear mode convergence patterns emerging right from the start, signaling a stable training process."
+    ],
+    "answers": "Answers: B"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "q": "1) What is the primary feature observed in Figure 5 regarding electronic music?",
+    "options": [
+      "A) High transfer success across all genres, while preserving genre-specific style.",
+      "B) Success rate of rhythm transfers above average for each tested genre.",
+      "C) Improved pitch accuracy during style transfer processes.",
+      "D) Maintained lyrical themes after applying different styles to samples."
+    ],
+    "answers": "Answers: 1) A"
+  },
+  {
+    "q": "2) According to Figure 5, what is consistent about the electronic music samples?",
+    "options": [
+      "A) They all originate from a single artist or genre source for comparison.",
+      "B) The rhythmic content remains intact despite style transfer.",
+      "C) Each sample shows an increase in tempo after being styled differently.",
+      "D) There'self are variations of genres with no traceable original styles present."
+    ],
+    "answers": "Answers: 2) B"
+  },
+  {
+    "q": "3) What does the success rate for style transfers on electronic music samples indicate?",
+    "options": [
+      "A) All transferred styles significantly altered the genre identity to a high degree.",
+      "B) Less than 50% of the sampled genres show successful styling preservation.",
+      "C) Transferring non-electronic musical elements into electronica is highly effective.",
+      "D) Success rate exceeds 80%, indicating strong model consistency for genre and style retention."
+    ],
+    "answers": "Answers: 3) D"
+  }
+]

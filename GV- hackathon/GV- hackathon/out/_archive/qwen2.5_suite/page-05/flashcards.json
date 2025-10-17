@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What are the characteristics of generated jazz patterns in Figure 3?",
+    "a": "Generated jazz patterns in Figure 3 exhibit realistic timing and structure, capturing traits like syncopation and complexity."
+  },
+  {
+    "q": "How do generated jazz patterns in Figure 3 demonstrate rhythmic coherence?",
+    "a": "Each sample is rhythmically coherent with noticeable variation, showcasing how the patterns maintain a consistent musical flow while incorporating slight differences to keep them interesting."
+  },
+  {
+    "q": "What specific rhythmic features are emphasized in the discussion of generated jazz patterns in Figure 3?",
+    "a": "The rhythms capture jazz-specific traits like syncopation and complexity, highlighting these as key elements that make the patterns sound musical and engaging."
+  },
+  {
+    "q": "How do cyclical (top) and linear (bottom) annealing strategies differ according to Figure 4?",
+    "a": "Figure 4 compares cyclical and linear annealing strategies in generated drum patterns, with the top showing a cyclical approach and the bottom illustrating a linear one. The flashcards will focus on these contrasting approaches."
+  },
+  {
+    "q": "What are the implications of using cyclical (top) versus linear (bottom) annealing strategies for generating drum patterns?",
+    "a": "Using cyclical vs. linear annealing strategies can affect the continuity and complexity of the generated drum patterns, with cyclical methods potentially offering smoother transitions but possibly less control over individual iterations."
+  }
+]

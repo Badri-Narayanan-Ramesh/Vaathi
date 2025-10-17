@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1. Cyclical annealing alternates between 0 and 1, giving periodic breaks from the KL constraint and sustaining diversity.",
+    "options": [
+      "A) Increases monotonically",
+      "B) Maintains higher pattern diversity",
+      "C) Causes repetitive patterns",
+      "D) Decreases coherence in outputs"
+    ]
+  },
+  {
+    "q": "2. Linear annealing increases monotonically from 0 to 1, often causing:",
+    "options": [
+      "A) More musically coherent outputs",
+      "B) Premature collapse and repetitive patterns",
+      "C) Periodic breaks",
+      "D) Higher diversity in outputs"
+    ]
+  },
+  {
+    "q": "3. Compared to cyclical annealing, linear annealing is more likely to result in which of the following?",
+    "options": [
+      "A) Greater pattern coherence",
+      "B) Increased randomness",
+      "C) More musically coherent outputs",
+      "D) Premature collapse and repetitive patterns"
+    ],
+    "answers": "Answers: 1) B, 2) B, 3) D"
+  }
+]

@@ -1,0 +1,1 @@
+The critical period of mode collapse begins around epochs 20-30, which is marked by a sharp decline in coverage metrics (see Slide 4). This suggests that during mid-training phases when the generator converges to limited modes, there's decreased diversity as observed through reduced apparent coverage.

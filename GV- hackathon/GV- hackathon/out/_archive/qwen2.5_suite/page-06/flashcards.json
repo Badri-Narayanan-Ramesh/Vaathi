@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is the primary difference between cyclical annealing and linear annealing?",
+    "a": "Cyclical annealing alternates between 0 and 1, providing periodic breaks from the KL constraint to sustain diversity, whereas linear annealing increases monotonically from 0 to 1, often leading to premature collapse and repetitive patterns."
+  },
+  {
+    "q": "Why is cyclical annealing considered more effective in maintaining pattern diversity?",
+    "a": "Cyclical annealing maintains higher pattern diversity compared to linear annealing, achieving up to 2-3 times more than the latter, which helps sustain a wide range of outputs without falling into repetitive or monotonous patterns."
+  },
+  {
+    "q": "How does cyclical annealing contribute to \"musically coherent\" outputs?",
+    "a": "By providing alternating periods of constraint relaxation and tightening, cyclical annealing can help in maintaining consistent structure while also allowing for exploration and variation, contributing to more cohesive and structured musical outputs compared to linear annealing which may lead to premature collapse."
+  },
+  {
+    "q": "What is a key contrast between the final output quality of cyclical versus linear annealed models?",
+    "a": "The final output quality of cyclical annealed models tends to be more musically coherent and diverse due to its alternating periods of constraint relaxation, whereas linear annealed models often experience premature collapse or repetitive patterns as the constraint increases monotonically."
+  },
+  {
+    "q": "How does cyclical annealing avoid issues that can arise with linear annealing?",
+    "a": "Cyclical annealing avoids the issue of premature collapse and repetitive patterns by not increasing the KL constraint uniformly but rather cycling between 0 and 1, which allows for sustained diversity without forcing an overly strict constraint at any point in the process."
+  }
+]

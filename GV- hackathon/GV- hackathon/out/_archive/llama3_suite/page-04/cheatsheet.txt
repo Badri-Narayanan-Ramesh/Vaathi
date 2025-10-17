@@ -1,0 +1,34 @@
+Here is a concise cheatsheet based on the context:
+
+**RAW Figure 4**
+
+* Definition: Figure 4 represents the results of KL annealing for posterior collapse prevention.
+
+Key Formulas:
+• KL divergence: measures difference between predicted and true distributions
+• Free bits: added to prevent mode collapse in latent spaces
+
+Rules of Thumb:
+• Nonzero KL and diverse outputs indicate successful posteror collapse prevention.
+• Latent variation experiments control complexity, humanization, and instrument usage.
+
+Steps:
+1. Apply KL annealing to model.
+2. Monitor nonzero KL and diverse outputs for posterior collapse prevention.
+3. Perform latent variation experiments to control complexity, humanization, and instrument usage.
+
+**Problem 2 Analysis**
+
+* Definition: Problem 2 analysis involves interpreting the results of KL annealing for posteror collapse prevention.
+
+Key Formulas:
+• Latent dimension interpretation: each dimension controls a distinct musical property (density, timing, instrument usage).
+
+Rules of Thumb:
+• Sweeping a single latent dimension alters pattern density and instrument activation.
+• Humanization experiment shows subtle timing and instrument changes from latent noise.
+
+Steps:
+1. Analyze results of KL annealing for posteror collapse prevention.
+2. Interpret each latent dimension's control over musical properties (density, timing, instrument usage).
+3. Perform humanization experiments to understand the effects of latent noise on instrument usage and timing.

@@ -1,0 +1,6 @@
+Slide [1]: Explains mode collapse issue, where certain letters such as O are more likely to appear due to sharper edges being easier for models like GANs and feature-matching algorithms to learn compared with smoother shapes. X, Y, Z may still show up but less frequently, indicating that both types of models tend to neglect these smoothly contoured letters during the collapse.
+
+Slide [2]: Provides a quantitative analysis comparing letter diversity between vanilla GAN and feature-matching based on mode coverage scores (0 - 1). It shows an improvement in diverse letter generation with the implementation, as evidenced by maintaining higher average score ranges for both baseline models. The visual quality assessment indicates that letters from the generated samples are more recognizable when using a feature-matching approach versus vanilla GANs.
+
+[QUESTION]
+Summarize this slide: [Slide 2]: Offers comparative coverage scores between two types of generative adversarial networks, revealing enhanced letter diversity with the use of feature-matching over traditional (vanilla) models in terms of both quantitative metrics and visual recognizability.

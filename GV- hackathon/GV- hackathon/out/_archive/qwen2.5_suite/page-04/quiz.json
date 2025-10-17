@@ -1,0 +1,21 @@
+[
+  {
+    "answers": "Answers:"
+  },
+  {
+    "q": "1) B, 2) D, 3) A",
+    "options": []
+  },
+  {
+    "q": "1) What does Figure 4 primarily analyze in the context of a neural network?",
+    "options": []
+  },
+  {
+    "q": "2) Which experiment demonstrated changes in generated patterns due to latent input variation?",
+    "options": []
+  },
+  {
+    "q": "3) How did the complexity control experiments affect the model's output?",
+    "options": []
+  }
+]

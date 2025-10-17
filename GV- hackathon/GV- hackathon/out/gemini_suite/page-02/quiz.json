@@ -1,0 +1,14 @@
+[
+  {
+    "q": "1) What is the critical period for collapse in training dynamics as depicted on Figure 2?",
+    "options": []
+  },
+  {
+    "q": "2) According to the context provided on Figure 3 and Figures 2\u20134, which phase shows high apparent coverage due to random initialization diversity?",
+    "options": []
+  },
+  {
+    "q": "3) In which phase does Figure 4 indicate persistent limitations in generated modes post training? Late (50+)",
+    "options": []
+  }
+]

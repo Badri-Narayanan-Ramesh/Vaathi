@@ -1,0 +1,5 @@
+- KL annealing & free bits prevent posterior collapse (Figure 4). Nonzero KL, diverse outputs. [Formula/Rule of Thumb: Avoid identical patterns regardless of latent input.]
+  
+- Complexity control with single dimension alters pattern density and instrument activation (Figureteer 2). Each dim controls distinct musical properties like timing or instruments. [Interpretation & Formula: Adjust one latent to modify specific aspects, e.g., `dimension_index * factor` for changes in property.]
+  
+- Humanization experiment shows nuanced temporal and instrumental variations (Figure 1). Subtle adjustments from noisy input detected via KL annealing & free bits strategy. [Rule of Thumb: Small latent shifts create discernible musical differences.]

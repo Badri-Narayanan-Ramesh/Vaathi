@@ -1,0 +1,17 @@
+[
+  {
+    "page_id": 4,
+    "text": "RAW:\nFigure 4\n\nProblem 2 Analysis:\na) Evidence of posterior collapse and how annealing prevented it\n\n\u2022 KL annealing and free bits prevented posterior collapse, as shown by nonzero KL and\ndiverse outputs (see Figure 1).\n\u2022 Latent variation experiments (complexity control, humanization) show clear changes\nin generated patterns.\n\u2022 If the model had collapsed, all patterns would look identical regardless of latent input.\n\nb) Interpretation of what each latent dimension learned to control\n\n\u2022 Sweeping a single latent dimension (complexity control) alters pattern density and\ninstrument activation (see Figure 2).\n\u2022 Each latent controls a distinct musical property, such as density, timing, or\ninstrument usage.\n\u2022 Humanization experiment shows subtle timing and instrument changes from\nlatent noise.\n\n\nOCR:\n\n\nCAPTIONS:\na plot plot with a line graph and a plot plot with a line graph",
+    "score": 1.607082486152649
+  },
+  {
+    "page_id": 7,
+    "text": "RAW:\ne) Success rate of style transfer while preserving rhythm\n\n\u2022 Figure 5 shows electronic samples with consistent rhythm and successful style\ntransfer.\n\u2022 Style is clearly adapted while core rhythmic structure remains intact.\n\u2022 High transfer success (>80%) observed across all tested genres.\n\u2022 Model maintains genre-specific style consistency while preserving rhythmic\ncontent.\n\n\nOCR:\n\n\nCAPTIONS:\nfigure 5 electric samples",
+    "score": 1.7163469791412354
+  },
+  {
+    "page_id": 5,
+    "text": "RAW:\nc) Quality assessment: Do generated patterns sound musical?\n\n\u2022 Generated jazz patterns in Figure 3 show realistic timing and structure.\n\u2022 The rhythms capture jazz-specific traits like syncopation and complexity.\n\u2022 Each sample is rhythmically coherent with noticeable variation.\n\n\nd) Comparison of different annealing strategies\n\n\u2022 Figure 4 compares cyclical (top) and linear (bottom) annealing strategies in\ngenerated drum patterns.\n\n\nOCR:\n\n\nCAPTIONS:\nfigure 5 - interpretation of the data\nfigure 3 - sample of the first - genitaly of the first - genitaly of the first - genitaly of the first - gen",
+    "score": 1.7205814123153687
+  }
+]

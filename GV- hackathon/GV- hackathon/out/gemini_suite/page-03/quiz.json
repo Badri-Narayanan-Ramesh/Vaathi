@@ -1,0 +1,30 @@
+[
+  {
+    "q": "1) According to Figure 3, what is one measurable improvement observed in samples generated using feature-matching stabilization?",
+    "options": [
+      "A) Increased letter recognition accuracy.",
+      "B) Reduced size of the images produced.",
+      "C) Decrease in color variation within the images.",
+      "D) Longer time required for processing each image."
+    ]
+  },
+  {
+    "q": "2) How does feature-matching stabilization affect training curves when compared to vanilla baseline?",
+    "options": [
+      "A) It shows increased oscillation patterns during convergence.",
+      "B) Training converges more stably with reduced oscillations.",
+      "C) The technique has no impact on the training curve stability.",
+      "D) It leads to unpredictable fluct ends of this document, I'll continue generating questions and answers:"
+    ]
+  },
+  {
+    "q": "3) What role does feature-matching stabilization play in preventing discriminator overpowering?",
+    "options": [
+      "A) By reducing image resolution prior to processing.",
+      "B) Through enhancing the contrast between images.",
+      "C) Matching intermediate feature distributions that counteracts power imbalance.",
+      "D) Limiting training iterations for both generator and discriminator equally."
+    ],
+    "answers": "Answers: 1) A, 2) B, 3) C"
+  }
+]

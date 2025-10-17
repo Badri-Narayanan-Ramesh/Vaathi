@@ -1,0 +1,13 @@
+[CHEATSHEET]
+
+c) Quality assessment:  
+- Generated jazz patterns show realistic timing and structure.  
+- Rhythms capture traits like syncopation, complexity.  
+- Each sample is rhythmically coherent with noticeable variation.
+
+d) Comparison of different annealing strategies:  
+- Figure 4 compares cyclical (top) vs linear (bottom) annealing in generated drum patterns.
+
+figure 5 - Interpretation of the data
+
+figure 3 - Sample of the first gen (ambiguous, needs correction)

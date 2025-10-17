@@ -1,0 +1,18 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+uuid
+# Add ai_core dependencies below
+pymupdf
+pdf2image
+pillow
+easyocr
+torch
+transformers
+sentence-transformers
+chromadb
+langchain
+pyttsx3
+requests
+google-generativeai

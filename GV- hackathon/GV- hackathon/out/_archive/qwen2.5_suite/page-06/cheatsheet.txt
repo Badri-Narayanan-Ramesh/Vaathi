@@ -1,0 +1,15 @@
+[CHEATSHEET]
+
+- **Cyclical Annealing**:
+  - Alternates between 0 and 1, maintaining diversity.
+  - Key Formula: No direct formula, cycles through states.
+
+- **Linear Annealing**:
+  - Increases linearly from 0 to 1, often premature collapse and repetition.
+  - Key Formula: Not applicable; follows a monotonic increase.
+
+- **Comparison**:
+  - Cyclical Annealing: Higher pattern diversity (2–3×), more musically coherent outputs.
+  - Linear Annealing: Premature collapse, repetitive patterns.
+
+- **Figure 1**: Comparison of cyclical and linear annealing.

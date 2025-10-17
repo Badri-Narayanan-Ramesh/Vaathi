@@ -1,0 +1,7 @@
+[CHEATSHEET]
+
+- Training stability: Less loss curve oscillation, better metrics.
+- Mode collapse begins around epoch 20-30, marked by sharp decline in coverage (Fig. 3).
+- Early epochs (0-10): High apparent coverage due to random initialization.
+- Mid-training (20-50): Critical period of generator convergence to limited modes.
+- Late training (50+): Stabilized at reduced coverage with persistent mode limitations.

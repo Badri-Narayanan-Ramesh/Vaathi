@@ -1,0 +1,29 @@
+[
+  {
+    "q": "1. What is the observed success rate of style transfer in Figure 5?",
+    "options": [
+      "A) Less than 50%",
+      "B) Greater than 80%",
+      "C) Exactly 90%",
+      "D) Around 60%"
+    ]
+  },
+  {
+    "q": "2. How does the model preserve rhythmic content during style transfer?",
+    "options": [
+      "A) It replaces it with a new pattern",
+      "B) It maintains genre-specific style consistency while preserving rhythmic content",
+      "C) It randomly changes the rhythm",
+      "D) It discards rhythmic information entirely"
+    ]
+  },
+  {
+    "q": "3. What is notable about the rhythmic structure in Figure 5 samples?",
+    "options": [
+      "A) It varies greatly across genres",
+      "B) The core rhythmic structure remains intact",
+      "C) There's no consistent rhythmic pattern",
+      "D) Rhythm is completely lost during style transfer"
+    ]
+  }
+]

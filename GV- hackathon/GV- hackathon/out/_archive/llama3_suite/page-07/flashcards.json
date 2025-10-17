@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is the minimum required success rate for a style transfer to be considered successful?",
+    "a": ">80%"
+  },
+  {
+    "q": "What aspect of rhythmic content does the model maintain during style transfer?",
+    "a": "Rhythmic structure"
+  },
+  {
+    "q": "What effect can be observed when using an OCR on a figure with a specific caption?",
+    "a": "The caption is replaced by text from the figure's title."
+  },
+  {
+    "q": "What type of consistency is maintained by the model during style transfer?",
+    "a": "Genre-specific style consistency"
+  },
+  {
+    "q": "What results are observed when applying the style transfer to samples across all tested genres?",
+    "a": "High transfer success (>80%)"
+  }
+]

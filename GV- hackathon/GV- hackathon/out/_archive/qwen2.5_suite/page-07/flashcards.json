@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What does Figure 5 illustrate in terms of electronic samples?",
+    "a": "Figure 5 illustrates electronic samples with consistent rhythm and successful style transfer."
+  },
+  {
+    "q": "How is the style adapted according to the context?",
+    "a": "The style is clearly adapted while maintaining the core rhythmic structure intact."
+  },
+  {
+    "q": "What percentage of success rate did the model achieve for transferring styles across all tested genres?",
+    "a": "The model achieved a high transfer success rate (>80%) across all tested genres."
+  },
+  {
+    "q": "How does the model preserve genre-specific style consistency?",
+    "a": "The model maintains genre-specific style consistency while preserving rhythmic content."
+  },
+  {
+    "q": "What key contrast is highlighted between successful style transfer and preserved rhythm?",
+    "a": "The key contrast highlighted is between successfully adapting the style while ensuring that the core rhythmic structure remains intact."
+  }
+]

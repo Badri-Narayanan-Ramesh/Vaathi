@@ -1,0 +1,22 @@
+[
+  {
+    "q": "What is the term for the phenomenon where the generator converges to limited modes during mid-training?",
+    "a": "Mode collapse."
+  },
+  {
+    "q": "At which epochs does mode collapse typically begin to manifest?",
+    "a": "Around epoch 20-30."
+  },
+  {
+    "q": "What can be observed in early epochs (0-10) that contributes to high apparent coverage?",
+    "a": "Random initialization diversity."
+  },
+  {
+    "q": "During late training (50+), what is the stabilization pattern for generator output?",
+    "a": "Reduced coverage levels with persistent mode limitations."
+  },
+  {
+    "q": "What effect does mode collapse have on coverage metrics during mid-training?",
+    "a": "A sharp decline in coverage."
+  }
+]

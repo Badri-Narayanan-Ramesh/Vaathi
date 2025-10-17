@@ -1,0 +1,13 @@
+[CHEATSHEET]
+
+- **KL Annealing**: Prevented posterior collapse by maintaining diversity.
+- **Free Bits**: Controlled complexity, preventing collapse.
+- **Latent Variations** (Complexity Control): Altered pattern density and instrument activation.
+- **Humanization Experiment**: Showed subtle changes in timing and instrument usage.
+- **Each Latent Dimension**: Controls distinct musical properties like density, timing, instrument usage.
+- **Posterior Collapse**: Occurs when all patterns look identical regardless of latent input.
+- **Steps to Prevent Collapse**:
+  - Use KL Annealing
+  - Apply Free Bits Control
+  - Experiment with Complexity Control (latent variations)
+  - Validate Humanization Effects

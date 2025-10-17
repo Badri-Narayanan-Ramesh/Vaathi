@@ -1,0 +1,11 @@
+[CHEATSHEET]
+
+- **Figure 5**: Electric samples with consistent rhythm and successful style transfer.
+- **Success Rate**: High (>80%) observed across all tested genres.
+- **Core Observation**: Model maintains genre-specific style consistency while preserving rhythmic content.
+- **Key Formula**: Not explicitly numerical, but based on model performance metrics (e.g., accuracy or similarity scores).
+- **Rule of Thumb**: Successful transfer indicates clear adaptation of style with intact rhythm structure.
+- **Steps**:
+  1. Analyze core rhythmic elements in samples
+  2. Evaluate style adaptation fidelity
+  3. Assess overall transfer success based on model performance metrics
