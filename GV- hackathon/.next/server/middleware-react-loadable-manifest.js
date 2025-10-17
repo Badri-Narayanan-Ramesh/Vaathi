@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"pages\\\\viewer.tsx -> ../components/PdfSlides\":{\"id\":\"pages\\\\viewer.tsx -> ../components/PdfSlides\",\"files\":[\"static/chunks/components_PdfSlides_tsx.js\"]}}"
